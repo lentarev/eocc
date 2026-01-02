@@ -1,0 +1,8 @@
+# Отключаем сортировку include, но оставляем форматирование кода
+SortIncludes: false
+
+# Остальные настройки — по желанию
+BasedOnStyle: Chromium
+IndentWidth: 4
+ColumnLimit: 160
+AccessModifierOffset: -4

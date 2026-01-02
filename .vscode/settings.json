@@ -1,4 +1,5 @@
 {
+  "cmake.automaticReconfigure": true,
   "cmake.configureOnOpen": false,
   "cmake.generator": "Ninja",
   "terminal.integrated.defaultProfile.windows": "Command Prompt"
