@@ -3,6 +3,17 @@ cmake_minimum_required(VERSION 3.28)
 # Язык проекта — только C и C++
 project(eocc LANGUAGES C CXX)
 
+# --- Подключаем GLFW из third_party ---
+option(GLFW_BUILD_EXAMPLES OFF)
+option(GLFW_BUILD_TESTS OFF)
+option(GLFW_BUILD_DOCS OFF)
+option(GLFW_INSTALL OFF)
+option(GLFW_BUILD_SHARED_LIBS OFF)  # ← ключевая строка: делаем статическую библиотеку
+add_subdirectory(third_party/glfw-3.4)
+
+# --- Подключаем OpenGL ---
+find_package(OpenGL REQUIRED)
+
 # --- Стандарт C++ ---
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -40,8 +51,38 @@ if(WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     add_compile_options(-municode)
 endif()
 
+# ===============================
+# СОБИРАЕМ ДВИЖОК как библиотеку
+# ===============================
+
+# Ищем все .cpp и .c файлы движка + glad
+file(GLOB_RECURSE ENGINE_SOURCES
+    src/engine/**/*.cpp
+    src/engine/**/*.c
+    third_party/glad/src/glad.c
+)
+
+# Создаём статическую библиотеку движка
+add_library(eocc_engine STATIC ${ENGINE_SOURCES})
+
+# Важно: указываем, что заголовки из third_party доступны как <...>
+target_include_directories(eocc_engine
+    PUBLIC
+        ${CMAKE_SOURCE_DIR}/third_party/glad/include    # для #include <glad/glad.h>
+        ${CMAKE_SOURCE_DIR}/src                         # для #include <engine/base/logger.h> и т.д.
+)
+
 # --- Цель ---
 add_executable(eocc src/main.cpp)
+
+# Игра зависит от движка
+target_link_libraries(eocc PRIVATE eocc_engine OpenGL::GL glfw)
+
+# Игра также может использовать заголовки движка (если нужно)
+target_include_directories(eocc
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/src
+)
 
 # --- Свойства цели (лучше так, чем глобальные флаги) ---
 target_compile_features(eocc PRIVATE cxx_std_20)
