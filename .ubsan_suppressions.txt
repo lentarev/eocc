@@ -1,0 +1,3 @@
+# Подавляем все ошибки, связанные с glfwGetProcAddress в GLAD
+fun:*glfwGetProcAddress*
+src:*/third_party/glad/*
