@@ -75,8 +75,9 @@ add_library(eocc_engine STATIC ${ENGINE_SOURCES})
 # Важно: указываем, что заголовки из third_party доступны как <...>
 target_include_directories(eocc_engine
     PUBLIC
-        ${CMAKE_SOURCE_DIR}/third_party/glad/include    # для #include <glad/glad.h>
-        ${CMAKE_SOURCE_DIR}/src                         # для #include <engine/base/logger.h> и т.д.
+        ${CMAKE_SOURCE_DIR}/third_party/glad/include        # для #include <glad/glad.h>
+        ${CMAKE_SOURCE_DIR}/third_party/glfw-3.4/include    # для #include <engine/base/logger.h> и т.д.
+        ${CMAKE_SOURCE_DIR}/src                             # для #include <engine/base/logger.h> и т.д.
 )
 
 # --- Цель ---

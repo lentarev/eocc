@@ -10,7 +10,7 @@
  */
 Engine::Engine() {
     // 1. Оконная подсистема
-    _window = std::make_unique<Window>(640, 480, "OpenGL Test Window");
+    _window = std::make_unique<Window>(1920, 1080, "OpenGL Test Window");
 }
 
 /**
