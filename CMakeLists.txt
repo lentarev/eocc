@@ -11,6 +11,13 @@ option(GLFW_INSTALL OFF)
 option(GLFW_BUILD_SHARED_LIBS OFF)  # ← ключевая строка: делаем статическую библиотеку
 add_subdirectory(third_party/glfw-3.4)
 
+# --- Подключаем SOIL2 как подпроект ---
+# Отключаем примеры и тесты (если они есть)
+set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(third_party/SOIL2)
+
+
 # --- Подключаем OpenGL ---
 find_package(OpenGL REQUIRED)
 
