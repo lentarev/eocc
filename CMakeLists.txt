@@ -9,6 +9,7 @@ option(GLFW_BUILD_TESTS OFF)
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_INSTALL OFF)
 option(GLFW_BUILD_SHARED_LIBS OFF)  # ← ключевая строка: делаем статическую библиотеку
+set(GLFW_BUILD_WAYLAND OFF CACHE BOOL "" FORCE)  # ← отключаем Wayland
 add_subdirectory(third_party/glfw-3.4)
 
 # --- Подключаем SOIL2 как подпроект ---
@@ -76,7 +77,7 @@ add_library(eocc_engine STATIC ${ENGINE_SOURCES})
 target_include_directories(eocc_engine
     PUBLIC
         ${CMAKE_SOURCE_DIR}/third_party/glad/include        # для #include <glad/glad.h>
-        ${CMAKE_SOURCE_DIR}/third_party/glfw-3.4/include    # для #include <engine/base/logger.h> и т.д.
+		${CMAKE_SOURCE_DIR}/third_party/glfw-3.4/include    # для #include <engine/base/logger.h> и т.д.
 		${CMAKE_SOURCE_DIR}/third_party/glm
         ${CMAKE_SOURCE_DIR}/src                             
 )
