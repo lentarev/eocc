@@ -92,6 +92,9 @@ target_include_directories(eocc
         ${CMAKE_SOURCE_DIR}/src
 )
 
+# Применяем C++20 к движку
+target_compile_features(eocc_engine PUBLIC cxx_std_20)
+
 # --- Свойства цели (лучше так, чем глобальные флаги) ---
 target_compile_features(eocc PRIVATE cxx_std_20)
 
