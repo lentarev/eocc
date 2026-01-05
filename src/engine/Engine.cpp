@@ -11,6 +11,10 @@
 Engine::Engine() {
     // 1. Оконная подсистема
     _window = std::make_unique<Window>(800, 600, "OpenGL Test Window");
+
+    // 2. Подиситема Shader
+
+    // 3. Подиситема Renderer
 }
 
 /**
