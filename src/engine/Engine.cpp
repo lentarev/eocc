@@ -3,9 +3,13 @@
 //
 
 #include "Engine.h"
+
 #include <engine/system/window/Window.h>
 #include <engine/assets/shader/Shader.h>
 #include <engine/renderer/Renderer.h>
+#include <game/scenes/menu/Menu.h>
+#include <game/scenes/level1/Level1.h>
+
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -35,6 +39,9 @@ Engine::Engine() {
 
     // Устанавливаем callback
     glfwSetKeyCallback(_window->getGLFWWindow(), keyCallback);
+
+    // Начинаем с меню
+    _currentScene = std::make_unique<Menu>();
 }
 
 /**
@@ -48,6 +55,9 @@ Engine::~Engine() {}
 void Engine::onKey(int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         std::cout << "KEY_SPACE" << std::endl;
+
+        // Переключаем на игровую сцену
+        _currentScene = std::make_unique<Level1>();
     }
 }
 
@@ -73,19 +83,22 @@ void Engine::run() {
 
         // --- Логика (фиксированный timestep) ---
         while (accumulator >= FIXED_DELTA_TIME) {
-            // game->update(FIXED_DELTA_TIME);
+            if (_currentScene) {
+                _currentScene->update(static_cast<float>(FIXED_DELTA_TIME));
+            }
+
             accumulator -= FIXED_DELTA_TIME;
         }
 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         // --- Рендер (переменный FPS) ---
-        // renderer->draw(game->getScene());
+        if (_currentScene) {
+            _currentScene->draw(*_renderer);
+        }
 
         // swap buffers
         glfwSwapBuffers(_window->getGLFWWindow());
-
-        // Позже перенести в рендерер
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
 
         lastTime = currentTime;
     }

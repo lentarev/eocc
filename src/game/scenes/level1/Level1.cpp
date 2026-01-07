@@ -8,7 +8,7 @@ Level1::~Level1() {}
 /**
  * Update - обновление логики
  */
-void Level1::update() {
+void Level1::update(float deltaTime) {
     // Пока аустой
 }
 

@@ -12,7 +12,7 @@ public:
     Level1();
     ~Level1();
 
-    void update() override;
+    void update(float deltaTime) override;
     void draw(Renderer& renderer) override;
 };
 

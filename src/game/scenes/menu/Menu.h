@@ -12,7 +12,7 @@ public:
     Menu();
     ~Menu();
 
-    void update() override;
+    void update(float deltaTime) override;
     void draw(Renderer& renderer) override;
 };
 

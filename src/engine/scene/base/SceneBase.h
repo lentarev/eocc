@@ -10,7 +10,7 @@ class Renderer;
 class SceneBase {
 public:
     virtual ~SceneBase() = default;
-    virtual void update() = 0;
+    virtual void update(float deltaTime) = 0;
     virtual void draw(Renderer& renderer) = 0;
 };
 

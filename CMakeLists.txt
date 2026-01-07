@@ -70,6 +70,12 @@ file(GLOB_RECURSE ENGINE_SOURCES
     third_party/glad/src/glad.c
 )
 
+# Игра
+file(GLOB_RECURSE GAME_SOURCES 
+    src/game/*.cpp
+    src/game/*.h
+)
+
 # Создаём статическую библиотеку движка
 add_library(eocc_engine STATIC ${ENGINE_SOURCES})
 
@@ -83,7 +89,7 @@ target_include_directories(eocc_engine
 )
 
 # --- Цель ---
-add_executable(eocc src/main.cpp)
+add_executable(eocc src/main.cpp ${GAME_SOURCES})
 
 # Игра зависит от движка
 target_link_libraries(eocc PRIVATE eocc_engine OpenGL::GL glfw)

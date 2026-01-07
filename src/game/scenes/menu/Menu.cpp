@@ -8,7 +8,7 @@ Menu::~Menu() {}
 /**
  * Update - обновление логики
  */
-void Menu::update() {
+void Menu::update(float deltaTime) {
     // Пока аустой
 }
 
