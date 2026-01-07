@@ -2,15 +2,18 @@
 // Created by Egor Lentarev on 06.01.2026.
 //
 
-#ifndef EOCC_MENU_H
-#define EOCC_MENU_H
+#ifndef EOCC_LEVEL1_H
+#define EOCC_LEVEL1_H
 
-class Level1 {
-private:
-    /* data */
+#include <engine/scene/base/SceneBase.h>
+
+class Level1 : public SceneBase {
 public:
-    Level1(/* args */);
+    Level1();
     ~Level1();
+
+    void update() override;
+    void draw(Renderer& renderer) override;
 };
 
-#endif  // EOCC_MENU_H
+#endif  // EOCC_LEVEL1_H

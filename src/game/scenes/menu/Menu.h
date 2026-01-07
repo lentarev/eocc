@@ -5,12 +5,15 @@
 #ifndef EOCC_MENU_H
 #define EOCC_MENU_H
 
-class Menu {
-private:
-    /* data */
+#include <engine/scene/base/SceneBase.h>
+
+class Menu : public SceneBase {
 public:
-    Menu(/* args */);
+    Menu();
     ~Menu();
+
+    void update() override;
+    void draw(Renderer& renderer) override;
 };
 
 #endif  // EOCC_MENU_H
