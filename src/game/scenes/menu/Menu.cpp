@@ -1,7 +1,17 @@
 #include "Menu.h"
 #include <glad/glad.h>
 
-Menu::Menu() {}
+Menu::Menu() {
+    // 1
+    // _cubeMesh = std::make_unique<CubeMesh>();
+    // _cubeMaterial = std::make_unique<GoldMaterial>();
+    // _transform1 = std::make_unique<Transform>();
+
+    // 2
+    // _cubeMesh2 = std::make_unique<CubeMesh>();
+    // _cubeMaterial2 = std::make_unique<GoldMaterial>();
+    // _transform2 = std::make_unique<Transform>();
+}
 
 Menu::~Menu() {}
 
@@ -9,10 +19,13 @@ Menu::~Menu() {}
  * Update - обновление логики
  */
 void Menu::update(float deltaTime) {
-    // Пока аустой
+    // Пока пустой
 }
 
 void Menu::draw(Renderer& renderer) {
-    glClearColor(0.8f, 0.2f, 0.2f, 1.0f);  // красный
-    glClear(GL_COLOR_BUFFER_BIT);
+    // Рисуем куб через рендерер
+    // renderer.drawMesh(_cubeMesh, _redMaterial, _transform1);
+
+    // Даже как то так
+    // renderer.drawMesh(_cubeMesh2, _cubeMaterial2, _transform2);
 }

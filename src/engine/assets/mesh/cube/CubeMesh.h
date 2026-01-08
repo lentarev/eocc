@@ -1,16 +1,16 @@
 //
-// Created by Egor Lentarev on 05.01.2026.
+// Created by Egor Lentarev on 08.01.2026.
 //
 
-#ifndef EOCC_CUBE_DATA_H
-#define EOCC_CUBE_DATA_H
+#ifndef EOCC_CUBE_MESH_H
+#define EOCC_CUBE_MESH_H
 
 #include <glad/glad.h>
 #include <cstddef>
 
-class CubeData {
+class CubeMesh {
 private:
-    CubeData() = delete;  //  Запрет создания экземпляров
+    CubeMesh() = delete;  //  Запрет создания экземпляров
 
     static const float vertices[72];
     static const unsigned int indices[36];
@@ -40,4 +40,4 @@ public:
     static size_t getNormalByteSize();
 };
 
-#endif  // EOCC_CUBE_DATA_H
+#endif  // EOCC_CUBE_MESH_H

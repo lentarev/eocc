@@ -1,6 +1,6 @@
-#include "CubeData.h"
+#include <CubeMesh.h>
 
-const float CubeData::vertices[72] = {
+const float CubeMesh::vertices[72] = {
     // Задняя грань (Z = -0.5)
     -0.5f, -0.5f, -0.5f,  // 0
     -0.5f, 0.5f, -0.5f,   // 1
@@ -38,7 +38,7 @@ const float CubeData::vertices[72] = {
     0.5f, 0.5f, -0.5f    // 23
 };
 
-const unsigned int CubeData::indices[36] = {
+const unsigned int CubeMesh::indices[36] = {
     // Задняя
     0, 1, 2, 0, 2, 3,
     // Передняя
@@ -54,7 +54,7 @@ const unsigned int CubeData::indices[36] = {
 
 };
 
-const float CubeData::texCoords[48] = {
+const float CubeMesh::texCoords[48] = {
     // Задняя грань
     0.0f, 0.0f,  // 0
     0.0f, 1.0f,  // 1
@@ -92,7 +92,7 @@ const float CubeData::texCoords[48] = {
     1.0f, 0.0f   // 23
 };
 
-const float CubeData::normals[108] = {
+const float CubeMesh::normals[108] = {
     // Задняя грань (Z = -0.5) - вершины 0-3
     // Нормаль: (0, 0, -1)
     0.0f, 0.0f, -1.0f,  // 0
@@ -138,59 +138,59 @@ const float CubeData::normals[108] = {
 };
 
 // Возвращаем указатель на начало массива
-const float* CubeData::getVertexArray() {
+const float* CubeMesh::getVertexArray() {
     return vertices;
 }
 
-const unsigned int* CubeData::getIndexArray() {
+const unsigned int* CubeMesh::getIndexArray() {
     return indices;
 }
 
-const float* CubeData::getTexCoordArray() {
+const float* CubeMesh::getTexCoordArray() {
     return texCoords;
 }
 
-const float* CubeData::getNormalArray() {
+const float* CubeMesh::getNormalArray() {
     return normals;
 }
 
 // Vertex -----------------------------------------
 // Возвращает количество вершин
-size_t CubeData::getVertexFloatCount() {
+size_t CubeMesh::getVertexFloatCount() {
     return sizeof(vertices) / sizeof(vertices[0]);
 }
 
 // Возвращает размер в байтах
-size_t CubeData::getVertexByteSize() {
+size_t CubeMesh::getVertexByteSize() {
     return sizeof(vertices);
 }
 
 // Indices -----------------------------------------
 // Возвращает количество индексов
-GLsizei CubeData::getIndexCount() {
+GLsizei CubeMesh::getIndexCount() {
     return sizeof(indices) / sizeof(indices[0]);
 }
 
 // Возвращает размер в байтах
-size_t CubeData::getIndexByteSize() {
+size_t CubeMesh::getIndexByteSize() {
     return sizeof(indices);
 }
 
 // Texture coordinates ------------------------------
 // Возвращает количество координат
-size_t CubeData::getTexCoordCount() {
+size_t CubeMesh::getTexCoordCount() {
     return sizeof(texCoords) / sizeof(texCoords[0]);
 }
 // Возвращает размер в байтах
-size_t CubeData::getTexCoordByteSize() {
+size_t CubeMesh::getTexCoordByteSize() {
     return sizeof(texCoords);
 }
 
 // Normals ------------------------------------------
-size_t CubeData::getNormalCount() {
+size_t CubeMesh::getNormalCount() {
     return sizeof(normals) / sizeof(normals[0]);
 }
 
-size_t CubeData::getNormalByteSize() {
+size_t CubeMesh::getNormalByteSize() {
     return sizeof(normals);
 }
