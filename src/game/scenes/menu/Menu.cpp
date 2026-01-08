@@ -11,6 +11,7 @@ Menu::Menu() {
     // _cubeMesh2 = std::make_unique<CubeMesh>();
     // _cubeMaterial2 = std::make_unique<GoldMaterial>();
     // _transform2 = std::make_unique<Transform>();
+    // _cubeBuffer = new CubeBuffer();
 }
 
 Menu::~Menu() {}
@@ -24,8 +25,8 @@ void Menu::update(float deltaTime) {
 
 void Menu::draw(Renderer& renderer) {
     // Рисуем куб через рендерер
-    // renderer.drawMesh(_cubeMesh, _redMaterial, _transform1);
+    // renderer.drawMesh(_cubeMesh, _cubeBuffer, _redMaterial, _transform1);
 
     // Даже как то так
-    // renderer.drawMesh(_cubeMesh2, _cubeMaterial2, _transform2);
+    // renderer.drawMesh(_cubeMesh2, _cubeBuffer, _cubeMaterial2, _transform2);
 }
