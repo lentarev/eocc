@@ -1,4 +1,4 @@
-#include <CubeMesh.h>
+#include "CubeMesh.h"
 
 const float CubeMesh::vertices[72] = {
     // Задняя грань (Z = -0.5)
