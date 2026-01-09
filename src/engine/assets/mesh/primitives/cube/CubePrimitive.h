@@ -8,9 +8,9 @@
 #include <glad/glad.h>
 #include <cstddef>
 
-class CubeMesh {
+class CubePrimitive {
 private:
-    CubeMesh() = delete;  //  Запрет создания экземпляров
+    CubePrimitive() = delete;  //  Disable creation of instances.
 
     static const float vertices[72];
     static const unsigned int indices[36];
