@@ -13,6 +13,5 @@ void Level1::update(float deltaTime) {
 }
 
 void Level1::draw(Renderer& renderer) {
-    glClearColor(0.2f, 0.8f, 0.2f, 1.0f);  // зелёный
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.2f, 0.8f, 0.2f, 1.0f);  // green
 }

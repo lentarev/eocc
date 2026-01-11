@@ -20,23 +20,15 @@ private:
 public:
     // Vertex
     static const std::vector<float>& getVertices();
-    static size_t getVertexFloatCount();
-    static size_t getVertexByteSize();
 
     // Indices
     static const std::vector<unsigned int>& getIndices();
-    static GLsizei getIndexCount();
-    static size_t getIndexByteSize();
 
     // Texture coordinates
     static const std::vector<float>& getTexCoords();
-    static size_t getTexCoordCount();
-    static size_t getTexCoordByteSize();
 
     // Normals
     static const std::vector<float>& getNormals();
-    static size_t getNormalCount();
-    static size_t getNormalByteSize();
 };
 
 #endif  // EOCC_CUBE_GEOMETRY_H

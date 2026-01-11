@@ -141,35 +141,9 @@ const std::vector<float>& CubeGeometry::getVertices() {
     return _vertices;
 }
 
-// Returns the number of vertices
-size_t CubeGeometry::getVertexFloatCount() {
-    return _vertices.size();
-}
-
-// Returns the size in bytes
-size_t CubeGeometry::getVertexByteSize() {
-    if (_vertices.empty())
-        return 0;
-
-    return _vertices.size() * sizeof(_vertices[0]);
-}
-
 // Indices ======================================
 const std::vector<unsigned int>& CubeGeometry::getIndices() {
     return _indices;
-}
-
-// Returns the number of indices
-GLsizei CubeGeometry::getIndexCount() {
-    return _indices.size();
-}
-
-// Returns the size in bytes
-size_t CubeGeometry::getIndexByteSize() {
-    if (_indices.empty())
-        return 0;
-
-    return _indices.size() * sizeof(_indices[0]);
 }
 
 // Texture coordinates =============================
@@ -177,33 +151,7 @@ const std::vector<float>& CubeGeometry::getTexCoords() {
     return _texCoords;
 }
 
-// Returns the number of texture coordinates
-size_t CubeGeometry::getTexCoordCount() {
-    return _texCoords.size();
-}
-
-// Returns the size in bytes
-size_t CubeGeometry::getTexCoordByteSize() {
-    if (_texCoords.empty())
-        return 0;
-
-    return _texCoords.size() * sizeof(_texCoords[0]);
-}
-
 // Normals =========================================
 const std::vector<float>& CubeGeometry::getNormals() {
     return _normals;
-}
-
-// Returns the number of normals
-size_t CubeGeometry::getNormalCount() {
-    return _normals.size();
-}
-
-// Returns the size in bytes
-size_t CubeGeometry::getNormalByteSize() {
-    if (_normals.empty())
-        return 0;
-
-    return _normals.size() * sizeof(_normals[0]);
 }

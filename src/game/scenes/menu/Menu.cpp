@@ -1,7 +1,11 @@
 #include "Menu.h"
 #include <glad/glad.h>
+#include <engine/assets/mesh/structures/MeshData.h>
+#include <engine/assets/mesh/primitives/Primitive.h>
 
 Menu::Menu() {
+    MeshData cubeData = Primitive::createCube();
+
     // 1
     // _cubeMesh = std::make_unique<CubeMesh>();
     // _cubeMaterial = std::make_unique<GoldMaterial>();
