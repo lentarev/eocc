@@ -3,6 +3,7 @@
 //
 
 #include "Mesh.h"
+#include <cstddef>
 
 Mesh::Mesh(const MeshData& data) : _indices(data.indices) {
     uploadToGPU(data);
