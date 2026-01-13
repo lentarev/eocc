@@ -5,7 +5,6 @@
 #ifndef EOCC_RENDERER_H
 #define EOCC_RENDERER_H
 
-#include <glad/glad.h>
 #include <memory>
 #include <glm/gtc/matrix_transform.hpp>
 #include <engine/assets/material/Material.h>
@@ -23,9 +22,6 @@ public:
 
 private:
     std::unique_ptr<Shader> _shader;
-
-    // Shader programs
-    GLuint _mainShaderProgram;
 };
 
 #endif  // EOCC_RENDERER_H
