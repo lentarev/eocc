@@ -20,7 +20,7 @@ Shader::~Shader() {
 }
 
 /**
- * Чтение исходного кода GLSL из файла
+ * Reading GLSL source code from a file
  */
 std::string Shader::read(const char* filePath) {
     std::ifstream fileStream(filePath, std::ios::binary);
@@ -33,7 +33,7 @@ std::string Shader::read(const char* filePath) {
 }
 
 /**
- * Создает шейдерную программу
+ * Creates a shader program
  */
 GLuint Shader::createProgram(std::string vertShaderStr, std::string fragShaderStr) {
     GLint vertCompiled;
@@ -43,16 +43,16 @@ GLuint Shader::createProgram(std::string vertShaderStr, std::string fragShaderSt
     const char* vertShaderSrc = vertShaderStr.c_str();
     const char* fragShaderSrc = fragShaderStr.c_str();
 
-    // Создает объекты шейдеров. Изначально пустые.
+    // Creates shader objects. Initially empty.
     GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-    // Загружаем код GLSL из строк в пустые объекты шейдеров
+    // Loading GLSL code from strings into empty shader objects
     glShaderSource(vShader, 1, &vertShaderSrc, NULL);
     glShaderSource(fShader, 1, &fragShaderSrc, NULL);
 
     // *******************************************
-    // Компиляция вершинного шейдера
+    // Vertex shader compilation
     glCompileShader(vShader);
     checkOpenGLError();
 
@@ -64,7 +64,7 @@ GLuint Shader::createProgram(std::string vertShaderStr, std::string fragShaderSt
     // -------------------------------------------
 
     // *******************************************
-    // Компиляция фрагментного шейдера
+    // Compiling a fragment shader
     glCompileShader(fShader);
     checkOpenGLError();
 
@@ -75,7 +75,7 @@ GLuint Shader::createProgram(std::string vertShaderStr, std::string fragShaderSt
     }
     // -------------------------------------------
 
-    // Создаем пустой объект шейдерной программы
+    // Create an empty shader program object
     _vfProgram = glCreateProgram();
 
     glAttachShader(_vfProgram, vShader);
@@ -93,9 +93,9 @@ GLuint Shader::createProgram(std::string vertShaderStr, std::string fragShaderSt
     }
     // -------------------------------------------
 
-    // Очистим ресурсы GPU
+    // Let's clear GPU resources
 
-    // Когда шейдерная программа готова, удаляем исходные шейдеры
+    // Once the shader program is ready, delete the original shaders
 
     if (vShader) {
         glDeleteShader(vShader);
@@ -109,7 +109,7 @@ GLuint Shader::createProgram(std::string vertShaderStr, std::string fragShaderSt
 }
 
 /**
- * Ошибки компиляции (compilation) GLSL
+ * GLSL compilation errors
  */
 void Shader::logCompilation(GLuint shader) {
     int len = 0;
@@ -128,7 +128,7 @@ void Shader::logCompilation(GLuint shader) {
 }
 
 /**
- * Ошибки связывания (linking) GLSL
+ * GLSL linking errors
  */
 void Shader::logProgramLink(GLuint prog) {
     int len = 0;
@@ -147,7 +147,7 @@ void Shader::logProgramLink(GLuint prog) {
 }
 
 /**
- * Проверяет флаг на наличие ошибки OpenGL
+ * Checks the flag for an OpenGL error.
  */
 bool Shader::checkOpenGLError() {
     bool foundError = false;
@@ -162,7 +162,7 @@ bool Shader::checkOpenGLError() {
     return foundError;
 }
 
-// Возвращает шейдерную программу
+// Returns the shader program
 GLuint Shader::getProgram() const {
     return _vfProgram;
 }

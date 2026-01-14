@@ -14,7 +14,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-// --- Статический коллбэк (только здесь, только в .cpp) ---
+// --- static callback ---
 static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
     if (engine) {
@@ -22,46 +22,38 @@ static void keyCallback(GLFWwindow* window, int key, int scancode, int action, i
     }
 }
 
-/**
- * Constructor
- */
+/// Constructor
 Engine::Engine() {
-    // 1. Оконная подсистема
+    // 1. Window subsystem
     _window = std::make_unique<Window>(800, 600, "OpenGL Test Window");
 
-    // 2. Подиситема Renderer
+    // 2. Renderer subsystem
     _renderer = std::make_unique<Renderer>();
 
-    // Передаём указатель на этот Engine в окно GLFW
+    // Passing a pointer to Engine to the GLFW window
     glfwSetWindowUserPointer(_window->getGLFWWindow(), this);
 
-    // Устанавливаем callback
+    // Set callback
     glfwSetKeyCallback(_window->getGLFWWindow(), keyCallback);
 
-    // Начинаем с меню
+    // Let's start with the menu
     _currentScene = std::make_unique<Menu>();
 }
 
-/**
- * Destructor
- */
+/// Destructor
 Engine::~Engine() {}
 
-/**
- * Обработчик клавиш
- */
+/// Handles keyboard input events.
 void Engine::onKey(int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         std::cout << "KEY_SPACE" << std::endl;
 
-        // Переключаем на игровую сцену
+        // Switch to Level1 scene
         _currentScene = std::make_unique<Level1>();
     }
 }
 
-/**
- * Запуск главного цикла
- */
+/// Starting the main loop
 void Engine::run() {
     double lastTime = glfwGetTime();
     double totalTime = 0.0;  // absolute time of logic
@@ -85,13 +77,12 @@ void Engine::run() {
         }
 
         accumulator += frameTime;
-        lastTime = currentTime;
 
         glfwPollEvents();
 
         float aspect = static_cast<float>(_window->getWidth()) / _window->getHeight();
 
-        // --- Логика (фиксированный timestep) ---
+        // --- Logic (fixed timestep) ---
         while (accumulator >= FIXED_DELTA_TIME) {
             if (_currentScene) {
                 _currentScene->update(static_cast<float>(FIXED_DELTA_TIME), static_cast<float>(totalTime));
@@ -101,7 +92,7 @@ void Engine::run() {
             accumulator -= FIXED_DELTA_TIME;
         }
 
-        // --- Рендер (переменный FPS) ---
+        // --- Render (variable FPS) ---
         if (_currentScene) {
             _renderer->beginFrame(mainCamera, aspect);
             _currentScene->draw(*_renderer);
