@@ -29,7 +29,7 @@ Window::Window(const int width, const int height, const char* title) {
     glfwGetFramebufferSize(_window, &framebufferWidth, &framebufferHeight);
     glfwMakeContextCurrent(_window);
 
-    // 2. Инициализация GLAD
+    // 2. Init GLAD
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
         glfwDestroyWindow(_window);  // убираем часть ресурса
         throw std::runtime_error("Failed to initialize GLAD");
@@ -56,7 +56,7 @@ Window::~Window() {
 }
 
 /**
- * Возвращает указатель на GLFWwindow
+ * Returns a pointer to GLFWwindow
  */
 GLFWwindow* Window::getGLFWWindow() const {
     return _window;

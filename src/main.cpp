@@ -4,7 +4,7 @@
 #include <engine/base/logger/Logger.h>
 
 int main() {
-    // 1. Глобальная Инициализация GLFW
+    // 1. Global Initialization (GLFW)
     if (!glfwInit()) {
         return -1;
     }
@@ -18,7 +18,7 @@ int main() {
         return -1;
     }
 
-    // Освобождаем все ресурсы связанные с GLFW
+    // Freeing up all resources associated with GLFW
     glfwTerminate();
 
     return 0;

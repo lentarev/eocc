@@ -17,13 +17,13 @@ public:
     // Destructor
     ~Window();
 
-    // Возвращает указатель на GLFWwindow
+    // Returns a pointer to GLFWwindow
     GLFWwindow* getGLFWWindow() const;
 
-    // Возвращает текущую ширину окна (в пикселях)
+    // Returns the current window width (in pixels)
     int getWidth() const;
 
-    // Возвращает текущую высоту окна (в пикселях)
+    // Returns the current window height (in pixels)
     int getHeight() const;
 
 private:

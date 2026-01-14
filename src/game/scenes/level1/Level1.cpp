@@ -6,12 +6,10 @@ Level1::Level1() {}
 Level1::~Level1() {}
 
 /**
- * Update - обновление логики
+ * Update - logic update
  */
 void Level1::update(float deltaTime, float totalTime) {
-    // Пока аустой
+    // Empty for now
 }
 
-void Level1::draw(Renderer& renderer) {
-    glClearColor(0.2f, 0.8f, 0.2f, 1.0f);  // green
-}
+void Level1::draw(Renderer& renderer) {}

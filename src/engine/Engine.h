@@ -8,7 +8,7 @@
 #include <memory>
 #include <engine/scene/base/SceneBase.h>
 
-// Предварительное объявление классов
+// Forward declaration of classes
 class Window;
 class Renderer;
 
@@ -17,26 +17,23 @@ public:
     Engine();
     ~Engine();
 
-    // Запуск главного цикла
+    // Starts and runs the main application loop.
     void run();
 
-    // Обработчик клавиш (будет вызываться GLFW)
+    // Handles keyboard input (called via GLFW callback).
     void onKey(int key, int scancode, int action, int mods);
 
 private:
     const double TARGET_FPS = 60.0;
-    const double FIXED_DELTA_TIME = 1.0 / TARGET_FPS;  // 60 UPS (updates per second)
+    const double FIXED_DELTA_TIME = 1.0 / TARGET_FPS;  // Fixed timestep: 60 updates/sec
 
-    // Объявляем подсистемы движка
+    // Subsystems
 
-    // 1. Оконная подсистема
-    std::unique_ptr<Window> _window;
+    std::unique_ptr<Window> _window;  ///< Manages the application window and input.
 
-    // 2. Подиситема Renderer
-    std::unique_ptr<Renderer> _renderer;
+    std::unique_ptr<Renderer> _renderer;  ///< Handles graphics rendering.
 
-    // 3. Подсистема сцен
-    std::unique_ptr<SceneBase> _currentScene;
+    std::unique_ptr<SceneBase> _currentScene;  ///< Active game scene.
 };
 
 #endif  // EOCC_ENGINE_H

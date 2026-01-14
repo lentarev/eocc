@@ -8,6 +8,13 @@
 #include <glad/glad.h>
 #include <vector>
 
+/**
+ * @brief Static cube geometry data (unit cube centered at origin).
+ *
+ * Provides vertices, indices, normals, and texture coordinates
+ * for a 1x1x1 cube aligned with axes, centered at (0,0,0).
+ */
+
 class CubeGeometry {
 private:
     CubeGeometry() = delete;  //  Disable creation of instances.

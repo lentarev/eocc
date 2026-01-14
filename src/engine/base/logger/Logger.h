@@ -13,7 +13,7 @@ public:
     static void log(const unsigned int logLevel, Args... args) {
         if (logLevel <= mLogLevel) {
             std::printf(args...);
-            // принудительный вывод для IDE
+            // forced output for IDE
             std::fflush(stdout);
         }
     }
