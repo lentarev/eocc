@@ -48,3 +48,8 @@ cmake .. -G Ninja
 ninja
 ./eocc
 ```
+
+## 📜 License
+
+Copyright (c) 2026 Egor Lentarev.  
+Released under the [MIT License](LICENSE).
