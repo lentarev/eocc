@@ -20,6 +20,12 @@ public:
     // Возвращает указатель на GLFWwindow
     GLFWwindow* getGLFWWindow() const;
 
+    // Возвращает текущую ширину окна (в пикселях)
+    int getWidth() const;
+
+    // Возвращает текущую высоту окна (в пикселях)
+    int getHeight() const;
+
 private:
     GLFWwindow* _window = nullptr;
 };

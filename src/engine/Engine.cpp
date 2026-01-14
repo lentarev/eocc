@@ -6,6 +6,8 @@
 
 #include <engine/system/window/Window.h>
 #include <engine/renderer/Renderer.h>
+#include <engine/camera/Camera.h>
+
 #include <game/scenes/menu/Menu.h>
 #include <game/scenes/level1/Level1.h>
 
@@ -64,6 +66,11 @@ void Engine::run() {
     double lastTime = glfwGetTime();
     double accumulator = 0.0;
 
+    glEnable(GL_DEPTH_TEST);
+
+    Camera mainCamera;
+    mainCamera.setPosition({0.0f, 0.0f, 5.0f});
+
     // LOOP
     while (!glfwWindowShouldClose(_window->getGLFWWindow())) {
         const double currentTime = glfwGetTime();
@@ -77,6 +84,8 @@ void Engine::run() {
 
         glfwPollEvents();
 
+        float aspect = static_cast<float>(_window->getWidth()) / _window->getHeight();
+
         // --- Логика (фиксированный timestep) ---
         while (accumulator >= FIXED_DELTA_TIME) {
             if (_currentScene) {
@@ -86,11 +95,11 @@ void Engine::run() {
             accumulator -= FIXED_DELTA_TIME;
         }
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         // --- Рендер (переменный FPS) ---
         if (_currentScene) {
+            _renderer->beginFrame(mainCamera, aspect);
             _currentScene->draw(*_renderer);
+            _renderer->endFrame();
         }
 
         // swap buffers
