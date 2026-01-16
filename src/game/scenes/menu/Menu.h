@@ -26,8 +26,6 @@ private:
     std::unique_ptr<Mesh> _cubeMesh;
     Material _cubeMaterial;
     Transform _transform;
-
-    float _totalTime = 0.0f;
 };
 
 #endif  // EOCC_MENU_H
