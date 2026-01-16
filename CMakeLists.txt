@@ -65,46 +65,54 @@ endif()
 
 # Ищем все .cpp и .c файлы движка + glad
 file(GLOB_RECURSE ENGINE_SOURCES
-    src/engine/*.cpp
-    src/engine/*.c
+    src/eocc/*.cpp
+    src/eocc/*.c
     third_party/glad/src/glad.c
-)
-
-# Игра
-file(GLOB_RECURSE GAME_SOURCES 
-    src/game/*.cpp
-    src/game/*.h
 )
 
 # Создаём статическую библиотеку движка
 add_library(eocc_engine STATIC ${ENGINE_SOURCES})
 
-# Важно: указываем, что заголовки из third_party доступны как <...>
+# Публичные заголовки: include/
+# Приватные: src/ (только для компиляции самой библиотеки)
 target_include_directories(eocc_engine
     PUBLIC
-        ${CMAKE_SOURCE_DIR}/third_party/glad/include        # для #include <glad/glad.h>
-		${CMAKE_SOURCE_DIR}/third_party/glfw-3.4/include    # для #include <engine/base/logger.h> и т.д.
-		${CMAKE_SOURCE_DIR}/third_party/glm
-        ${CMAKE_SOURCE_DIR}/src                             
-)
-
-# --- Цель ---
-add_executable(eocc src/main.cpp ${GAME_SOURCES})
-
-# Игра зависит от движка
-target_link_libraries(eocc PRIVATE eocc_engine OpenGL::GL glfw)
-
-# Игра также может использовать заголовки движка (если нужно)
-target_include_directories(eocc
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw-3.4/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glm
     PRIVATE
-        ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-# Применяем C++20 к движку
+# Линкуем зависимости
+target_link_libraries(eocc_engine PRIVATE glfw OpenGL::GL)
+
+# ===============================
+# СОБИРАЕМ ДЕМО
+# ===============================
+
+# Источники демо
+file(GLOB_RECURSE DEMO_SOURCES
+    demo/*.cpp
+)
+
+# Копируем шейдеры в build-директорию
+file(COPY demo/shaders DESTINATION ${CMAKE_BINARY_DIR}/shaders)
+
+# Цель демо
+add_executable(eocc_demo ${DEMO_SOURCES})
+
+# Демо зависит от движка
+target_link_libraries(eocc_demo PRIVATE eocc_engine)
+
+# Демо может использовать публичный API
+target_include_directories(eocc_demo PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/demo 
+)
+
+# Применяем C++20
 target_compile_features(eocc_engine PUBLIC cxx_std_20)
-
-# --- Свойства цели (лучше так, чем глобальные флаги) ---
-target_compile_features(eocc PRIVATE cxx_std_20)
-
-# Если позже добавите OpenGL, GLFW, assimp и т.д. — подключайте так:
-# target_link_libraries(eocc PRIVATE OpenGL::GL glfw assimp::assimp)
+target_compile_features(eocc_demo PRIVATE cxx_std_20)
