@@ -9,6 +9,8 @@
 #include <vector>
 #include <eocc/assets/mesh/structures/MeshData.h>
 
+namespace eocc {
+
 class Mesh {
 public:
     explicit Mesh(const MeshData& data);
@@ -31,5 +33,7 @@ private:
 
     void uploadToGPU(const MeshData& data);
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_MESH_H

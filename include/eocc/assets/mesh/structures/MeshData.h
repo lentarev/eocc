@@ -7,11 +7,15 @@
 
 #include <vector>
 
+namespace eocc {
+
 struct MeshData {
     std::vector<float> positions;       // x, y, z, ...
     std::vector<float> normals;         // x, y, z, ... (optional)
     std::vector<float> texCoords;       // u, v, ... (optional)
     std::vector<unsigned int> indices;  // triangles
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_MESH_DATA_H

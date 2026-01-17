@@ -7,6 +7,8 @@
 
 #include <eocc/scene/base/SceneBase.h>
 
+namespace eocc {
+
 // forward declaration
 class Engine;
 class Renderer;
@@ -42,5 +44,7 @@ public:
 protected:
     Engine* _engine = nullptr;
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_SCENE_BASE_H

@@ -4,4 +4,8 @@
 
 #include <eocc/base/logger/Logger.h>
 
+namespace eocc {
+
 unsigned int Logger::mLogLevel = 1;
+
+}

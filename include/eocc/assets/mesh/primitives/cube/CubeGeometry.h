@@ -15,6 +15,8 @@
  * for a 1x1x1 cube aligned with axes, centered at (0,0,0).
  */
 
+namespace eocc {
+
 class CubeGeometry {
 private:
     CubeGeometry() = delete;  //  Disable creation of instances.
@@ -37,5 +39,7 @@ public:
     // Normals
     static const std::vector<float>& getNormals();
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_CUBE_GEOMETRY_H

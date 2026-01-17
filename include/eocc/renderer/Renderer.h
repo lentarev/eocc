@@ -10,6 +10,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <eocc/assets/material/Material.h>
 
+namespace eocc {
+
 // Forward declaration of classes
 class Mesh;
 class Camera;
@@ -41,5 +43,7 @@ private:
 
     bool _frameBegun = false;
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_RENDERER_H

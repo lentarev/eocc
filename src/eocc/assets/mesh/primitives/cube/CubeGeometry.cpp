@@ -4,6 +4,8 @@
 
 #include <eocc/assets/mesh/primitives/cube/CubeGeometry.h>
 
+namespace eocc {
+
 std::vector<float> CubeGeometry::_vertices = {
     // Back face (Z = -0.5)
     -0.5f, -0.5f, -0.5f,  // 0
@@ -159,3 +161,5 @@ const std::vector<float>& CubeGeometry::getTexCoords() {
 const std::vector<float>& CubeGeometry::getNormals() {
     return _normals;
 }
+
+}  // namespace eocc

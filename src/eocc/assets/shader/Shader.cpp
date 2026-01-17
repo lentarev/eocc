@@ -3,6 +3,8 @@
 #include <sstream>
 #include <stdexcept>
 
+namespace eocc {
+
 /**
  * Constructor
  */
@@ -166,3 +168,5 @@ bool Shader::checkOpenGLError() {
 GLuint Shader::getProgram() const {
     return _vfProgram;
 }
+
+}  // namespace eocc
