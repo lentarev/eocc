@@ -18,7 +18,7 @@ eocc is not a black box. It’s a tool built to be read, understood, and extende
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/egorlentarev/eocc.git
+git clone https://github.com/lentarev/eocc.git
 cd eocc
 cmake -B build -G Ninja
 cmake --build build

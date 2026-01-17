@@ -18,7 +18,7 @@ eocc — это не чёрный ящик. Это инструмент, соз�
 ## 🚀 Быстрый старт
 
 ```bash
-git clone https://github.com/egorlentarev/eocc.git
+git clone https://github.com/lentarev/eocc.git
 cd eocc
 cmake -B build -G Ninja
 cmake --build build
