@@ -4,6 +4,8 @@
 
 #include <eocc/camera/Camera.h>
 
+namespace eocc {
+
 Camera::Camera() = default;
 
 glm::mat4 Camera::getViewMatrix() const {
@@ -13,3 +15,5 @@ glm::mat4 Camera::getViewMatrix() const {
 glm::mat4 Camera::getProjectionMatrix(float aspectRatio) const {
     return glm::perspective(_fov, aspectRatio, _near, _far);
 }
+
+}  // namespace eocc

@@ -9,6 +9,8 @@
 #include <GLFW/glfw3.h>
 #include <eocc/base/logger/Logger.h>
 
+namespace eocc {
+
 class Window {
 public:
     // Constructor
@@ -29,5 +31,7 @@ public:
 private:
     GLFWwindow* _window = nullptr;
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_WINDOW_H

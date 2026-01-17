@@ -8,6 +8,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+namespace eocc {
+
 class Camera {
 public:
     Camera();
@@ -33,5 +35,7 @@ private:
     float _near = 0.1f;
     float _far = 100.0f;
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_CAMERA_H

@@ -7,6 +7,8 @@
 
 #include <cstdio>
 
+namespace eocc {
+
 class Logger {
 public:
     template <typename... Args>
@@ -23,5 +25,7 @@ public:
 private:
     static unsigned int mLogLevel;
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_LOGGER_H

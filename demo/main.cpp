@@ -14,12 +14,12 @@ int main() {
     }
 
     try {
-        const auto engine = std::make_unique<Engine>();
+        const auto engine = std::make_unique<eocc::Engine>();
         engine->setCurrentScene(std::make_unique<Menu>());
         engine->run();
 
     } catch (const std::exception& e) {
-        Logger::log(1, "Fatal error: %s\n", e.what());
+        eocc::Logger::log(1, "Fatal error: %s\n", e.what());
         return -1;
     }
 

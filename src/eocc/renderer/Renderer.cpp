@@ -6,6 +6,8 @@
 #include <eocc/assets/mesh/Mesh.h>
 #include <eocc/camera/Camera.h>
 
+namespace eocc {
+
 Renderer::Renderer() {
     // _shader = std::make_unique<Shader>();
     // _shader->createProgram(_shader->read("./shaders/basic.vert"), _shader->read("./shaders/basic.frag"));
@@ -64,3 +66,5 @@ void Renderer::drawMesh(const Mesh& mesh, const Material& material, const glm::m
 void Renderer::endFrame() {
     _frameBegun = false;
 }
+
+}  // namespace eocc

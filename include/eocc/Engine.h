@@ -8,6 +8,8 @@
 #include <memory>
 #include <eocc/scene/base/SceneBase.h>
 
+namespace eocc {
+
 // Forward declaration of classes
 class Window;
 class Renderer;
@@ -38,5 +40,7 @@ private:
 
     std::unique_ptr<SceneBase> _currentScene;  ///< Active game scene.
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_ENGINE_H

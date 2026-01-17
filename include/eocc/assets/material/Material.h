@@ -7,10 +7,14 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+namespace eocc {
+
 struct Material {
     glm::vec3 baseColor = {1.0f, 1.0f, 1.0f};
     float roughness = 1.0f;
     // Later: enum Type { LIT, UNLIT, PBR, WIREFRAME };
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_MATERIAL_H

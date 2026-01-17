@@ -5,10 +5,14 @@
 #ifndef EOCC_POSITION_H
 #define EOCC_POSITION_H
 
+namespace eocc {
+
 struct Position {
     float x;
     float y;
     float z;
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_POSITION_H

@@ -12,12 +12,12 @@
 #include "scenes/level1/Level1.h"
 
 Menu::Menu() {
-    _shader = std::make_unique<Shader>();
+    _shader = std::make_unique<eocc::Shader>();
     _shader->createProgram(_shader->read("./shaders/basic.vert"), _shader->read("./shaders/basic.frag"));
 
-    MeshData cubeData = Primitive::createCube();
+    eocc::MeshData cubeData = eocc::Primitive::createCube();
 
-    _cubeMesh = std::make_unique<Mesh>(cubeData);
+    _cubeMesh = std::make_unique<eocc::Mesh>(cubeData);
     _cubeMaterial.baseColor = {1.0f, 0.0f, 0.0f};
 }
 
@@ -40,7 +40,7 @@ void Menu::update(float deltaTime, float totalTime) {
     _transform.rotation.y = glm::radians(45.0f) * totalTime;
 }
 
-void Menu::draw(Renderer& renderer) {
+void Menu::draw(eocc::Renderer& renderer) {
     renderer.useShaderProgram(_shader->getProgram());
     // Drawing a cube using a renderer
     renderer.drawMesh(*_cubeMesh, _cubeMaterial, _transform.getModelMatrix());

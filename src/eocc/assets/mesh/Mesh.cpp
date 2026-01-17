@@ -5,6 +5,8 @@
 #include <eocc/assets/mesh/Mesh.h>
 #include <cstddef>
 
+namespace eocc {
+
 Mesh::Mesh(const MeshData& data) : _indices(data.indices) {
     uploadToGPU(data);
 }
@@ -94,3 +96,5 @@ GLuint Mesh::getVAO() const {
 GLsizei Mesh::getIndexCount() const {
     return _indices.size();
 }
+
+}  // namespace eocc

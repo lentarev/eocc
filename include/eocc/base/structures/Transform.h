@@ -7,6 +7,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+namespace eocc {
+
 struct Transform {
     glm::vec3 position = {0, 0, 0};
     glm::vec3 rotation = {0, 0, 0};  // в радианах или через quat
@@ -23,5 +25,7 @@ struct Transform {
         return mat;
     }
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_TRANSFORM_H

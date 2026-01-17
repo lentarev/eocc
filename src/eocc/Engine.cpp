@@ -16,11 +16,13 @@
 
 // --- static callback ---
 static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
+    eocc::Engine* engine = static_cast<eocc::Engine*>(glfwGetWindowUserPointer(window));
     if (engine) {
         engine->onKey(key, scancode, action, mods);
     }
 }
+
+namespace eocc {
 
 /// Constructor
 Engine::Engine() {
@@ -115,3 +117,5 @@ void Engine::run() {
         lastTime = currentTime;
     }
 }
+
+}  // namespace eocc

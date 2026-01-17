@@ -15,6 +15,9 @@
  * Loads, compiles, and links GLSL shaders from files.
  * Non-copyable due to GPU resource ownership.
  */
+
+namespace eocc {
+
 class Shader {
 public:
     // Constructor
@@ -50,5 +53,7 @@ protected:
 
     GLuint _vfProgram;
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_SHADER_H

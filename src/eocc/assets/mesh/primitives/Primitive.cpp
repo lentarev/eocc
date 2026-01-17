@@ -1,6 +1,8 @@
 #include <eocc/assets/mesh/primitives/Primitive.h>
 #include <eocc/assets/mesh/primitives/cube/CubeGeometry.h>
 
+namespace eocc {
+
 Primitive::Primitive() = default;
 
 MeshData Primitive::createCube() {
@@ -13,3 +15,5 @@ MeshData Primitive::createCube() {
 
     return data;
 }
+
+}  // namespace eocc

@@ -7,11 +7,15 @@
 
 #include <eocc/assets/mesh/structures/MeshData.h>
 
+namespace eocc {
+
 class Primitive {
 public:
     Primitive();
 
     static MeshData createCube();
 };
+
+}  // namespace eocc
 
 #endif  // EOCC_PRIMITIVE_H

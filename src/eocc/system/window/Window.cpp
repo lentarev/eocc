@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <iostream>
 
+namespace eocc {
+
 /**
  * Constructor
  */
@@ -73,3 +75,5 @@ int Window::getHeight() const {
     glfwGetFramebufferSize(_window, &w, &h);
     return h;
 }
+
+}  // namespace eocc
