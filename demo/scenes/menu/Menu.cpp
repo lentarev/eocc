@@ -1,9 +1,14 @@
 #include "Menu.h"
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include <eocc/Engine.h>
 #include <eocc/assets/mesh/structures/MeshData.h>
 #include <eocc/assets/mesh/primitives/Primitive.h>
 #include <eocc/assets/mesh/Mesh.h>
 #include <eocc/renderer/Renderer.h>
+
+#include "scenes/level1/Level1.h"
 
 Menu::Menu() {
     MeshData cubeData = Primitive::createCube();
@@ -13,6 +18,16 @@ Menu::Menu() {
 }
 
 Menu::~Menu() {}
+
+/**
+ * Input
+ */
+void Menu::onKey(int key, int scancode, int action, int mods) {
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+        // Transition to another scene
+        this->getEngine()->setCurrentScene(std::make_unique<Level1>());
+    }
+}
 
 /**
  * Update - logic update

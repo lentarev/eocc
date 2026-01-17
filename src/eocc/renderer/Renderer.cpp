@@ -10,7 +10,7 @@
 Renderer::Renderer() {
     _shader = std::make_unique<Shader>();
 
-    _shader->createProgram(_shader->read("./src/engine/assets/shaders/basic.vert"), _shader->read("./src/engine/assets/shaders/basic.frag"));
+    _shader->createProgram(_shader->read("./shaders/shaders/basic.vert"), _shader->read("./shaders/shaders/basic.frag"));
 }
 
 Renderer::~Renderer() {}

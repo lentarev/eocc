@@ -6,6 +6,8 @@
 #define EOCC_MENU_H
 
 #include <memory>
+#include <string>
+
 #include <eocc/scene/base/SceneBase.h>
 #include <eocc/assets/material/Material.h>
 #include <eocc/base/structures/Transform.h>
@@ -21,6 +23,7 @@ public:
 
     void update(float deltaTime, float totalTime) override;
     void draw(Renderer& renderer) override;
+    void onKey(int key, int scancode, int action, int mods) override;
 
 private:
     std::unique_ptr<Mesh> _cubeMesh;

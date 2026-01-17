@@ -5,7 +5,15 @@
 #ifndef EOCC_LEVEL1_H
 #define EOCC_LEVEL1_H
 
+#include <memory>
+#include <string>
+
 #include <eocc/scene/base/SceneBase.h>
+#include <eocc/assets/material/Material.h>
+#include <eocc/base/structures/Transform.h>
+
+class Mesh;
+class Renderer;
 
 class Level1 : public SceneBase {
 public:
@@ -14,6 +22,12 @@ public:
 
     void update(float deltaTime, float totalTime) override;
     void draw(Renderer& renderer) override;
+    void onKey(int key, int scancode, int action, int mods) override;
+
+private:
+    std::unique_ptr<Mesh> _cubeMesh;
+    Material _cubeMaterial;
+    Transform _transform;
 };
 
 #endif  // EOCC_LEVEL1_H

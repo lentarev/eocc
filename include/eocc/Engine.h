@@ -23,6 +23,9 @@ public:
     // Handles keyboard input (called via GLFW callback).
     void onKey(int key, int scancode, int action, int mods);
 
+    // Set current scene
+    void setCurrentScene(std::unique_ptr<SceneBase> scene);
+
 private:
     const double TARGET_FPS = 60.0;
     const double FIXED_DELTA_TIME = 1.0 / TARGET_FPS;  // Fixed timestep: 60 updates/sec

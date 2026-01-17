@@ -8,8 +8,8 @@
 #include <eocc/renderer/Renderer.h>
 #include <eocc/camera/Camera.h>
 
-#include "scenes/menu/Menu.h"
-#include "scenes/level1/Level1.h"
+// #include "scenes/menu/Menu.h"
+// #include "scenes/level1/Level1.h"
 
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -37,7 +37,7 @@ Engine::Engine() {
     glfwSetKeyCallback(_window->getGLFWWindow(), keyCallback);
 
     // Let's start with the menu
-    _currentScene = std::make_unique<Menu>();
+    // _currentScene = std::make_unique<Menu>();
 }
 
 /// Destructor
@@ -46,10 +46,20 @@ Engine::~Engine() {}
 /// Handles keyboard input events.
 void Engine::onKey(int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
-        std::cout << "KEY_SPACE" << std::endl;
+        if (_currentScene) {
+            // Call the onKey method from the scene
+            _currentScene->onKey(key, scancode, action, mods);
+        }
+    }
+}
 
-        // Switch to Level1 scene
-        _currentScene = std::make_unique<Level1>();
+/// @brief Set current scene
+/// @param scene
+void Engine::setCurrentScene(std::unique_ptr<SceneBase> scene) {
+    _currentScene = std::move(scene);
+
+    if (_currentScene) {
+        _currentScene->setEngine(this);
     }
 }
 
