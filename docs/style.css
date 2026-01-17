@@ -25,7 +25,6 @@ h1 {
   margin-bottom: 16px;
   font-weight: 600;
   color: #1a1a1a;
-  text-decoration: none;
 }
 
 p {
@@ -33,6 +32,11 @@ p {
   max-width: 600px;
   margin-bottom: 32px;
   color: #555;
+}
+
+a {
+  color: #3979b4;
+  text-decoration: none;
 }
 
 .lang-choice {
