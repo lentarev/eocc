@@ -6,7 +6,7 @@
       "type": "lldb",
       "request": "launch",
       "program": "${command:cmake.launchTargetPath}",
-      "cwd": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}/build/debug",
       "stopOnEntry": false
     },
     {
@@ -14,7 +14,7 @@
       "type": "lldb",
       "request": "launch",
       "program": "${command:cmake.launchTargetPath}",
-      "cwd": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}/build/asan",
       "env": {
         "ASAN_OPTIONS": "detect_leaks=1:abort_on_error=1"
       }

@@ -3,6 +3,13 @@
 A minimal, educational C++/OpenGL game engine built from scratch.  
 Designed for learning graphics programming, engine architecture, and real-time simulation.
 
+You might wonder: why the name "eocc"?  
+It stands for **"Epoch of Clashes Client"** — the title of the game I originally started (and continue to develop).  
+
+Initially, the project was structured as the client-side component of that game. However, as the codebase grew, I made a deliberate decision to separate the core engine functionality from the game-specific logic.  
+
+Thus, **eocc** evolved into a standalone engine — while still carrying the legacy of its origins.
+
 ## 🚀 Features
 
 - **Scene management** – switch between scenes (e.g., Menu → Level)
