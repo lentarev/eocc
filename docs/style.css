@@ -39,6 +39,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 .lang-choice {
   margin-top: 24px;
   display: flex;
