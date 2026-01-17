@@ -1,4 +1,4 @@
-# EOCC Engine
+# eocc engine
 
 A minimal, educational C++/OpenGL game engine built from scratch.  
 Designed for learning graphics programming, engine architecture, and real-time simulation.
