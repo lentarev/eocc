@@ -1,6 +1,3 @@
-### 🇷🇺 `docs/ru/index.md`
-
-```md
 [🇷🇺 Русский](./) | [🇬🇧 English](../en/)
 
 # eocc engine
