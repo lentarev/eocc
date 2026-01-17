@@ -10,6 +10,8 @@ Initially, the project was structured as the client-side component of that game.
 
 Thus, **eocc** evolved into a standalone engine — while still carrying the legacy of its origins.
 
+📚 **Documentation**: [English](https://lentarev.github.io/eocc/en/) | [Русский](https://lentarev.github.io/eocc/ru/)
+
 ## 🚀 Features
 
 - **Scene management** – switch between scenes (e.g., Menu → Level)
