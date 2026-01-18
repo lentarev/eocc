@@ -5,9 +5,10 @@
 #ifndef EOCC_MESH_H
 #define EOCC_MESH_H
 
-#include <glad/glad.h>
 #include <vector>
 #include <eocc/assets/mesh/structures/MeshData.h>
+
+#include <eocc/base/OpenGLTypes.h>
 
 namespace eocc {
 

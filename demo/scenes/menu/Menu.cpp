@@ -1,7 +1,6 @@
 #include "Menu.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
 #include <eocc/Engine.h>
 #include <eocc/assets/mesh/structures/MeshData.h>
 #include <eocc/assets/mesh/primitives/Primitive.h>

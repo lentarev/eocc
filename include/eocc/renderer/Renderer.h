@@ -5,10 +5,11 @@
 #ifndef EOCC_RENDERER_H
 #define EOCC_RENDERER_H
 
-#include <glad/glad.h>
 #include <memory>
 #include <glm/gtc/matrix_transform.hpp>
 #include <eocc/assets/material/Material.h>
+
+#include <eocc/base/OpenGLTypes.h>
 
 namespace eocc {
 

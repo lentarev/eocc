@@ -9,6 +9,8 @@
 #include <GLFW/glfw3.h>
 #include <eocc/base/logger/Logger.h>
 
+// #include <eocc/base/OpenGLTypes.h>
+
 namespace eocc {
 
 class Window {

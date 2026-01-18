@@ -6,12 +6,11 @@
 #include <eocc/assets/mesh/Mesh.h>
 #include <eocc/camera/Camera.h>
 
+#include <glad/glad.h>
+
 namespace eocc {
 
-Renderer::Renderer() {
-    // _shader = std::make_unique<Shader>();
-    // _shader->createProgram(_shader->read("./shaders/basic.vert"), _shader->read("./shaders/basic.frag"));
-}
+Renderer::Renderer() {}
 
 Renderer::~Renderer() {}
 
