@@ -5,8 +5,8 @@
 #ifndef VECTHAR_CUBE_GEOMETRY_H
 #define VECTHAR_CUBE_GEOMETRY_H
 
-#include <glad/glad.h>
 #include <vector>
+#include <vecthar/base/OpenGLTypes.h>
 
 /**
  * @brief Static cube geometry data (unit cube centered at origin).

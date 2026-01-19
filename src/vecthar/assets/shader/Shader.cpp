@@ -3,6 +3,8 @@
 #include <sstream>
 #include <stdexcept>
 
+#include <glad/glad.h>
+
 namespace vecthar {
 
 /**

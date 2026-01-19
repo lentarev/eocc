@@ -4,6 +4,8 @@
 
 #include <vecthar/assets/mesh/primitives/cube/CubeGeometry.h>
 
+#include <glad/glad.h>
+
 namespace vecthar {
 
 std::vector<float> CubeGeometry::_vertices = {

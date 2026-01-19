@@ -5,24 +5,22 @@
 #ifndef VECTHAR_WINDOW_H
 #define VECTHAR_WINDOW_H
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <vecthar/base/logger/Logger.h>
-
-// #include <vecthar/base/OpenGLTypes.h>
+struct GLFWwindow;  // ← forward declaration
 
 namespace vecthar {
 
+// forward declaration
+class Engine;
+
 class Window {
+    friend class Engine;  // Engine can read _window
+
 public:
     // Constructor
     Window(const int width, const int height, const char* title);
 
     // Destructor
     ~Window();
-
-    // Returns a pointer to GLFWwindow
-    GLFWwindow* getGLFWWindow() const;
 
     // Returns the current window width (in pixels)
     int getWidth() const;
@@ -32,6 +30,7 @@ public:
 
 private:
     GLFWwindow* _window = nullptr;
+    GLFWwindow* getGLFWWindow() const { return _window; }
 };
 
 }  // namespace vecthar

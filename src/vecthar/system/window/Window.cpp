@@ -5,6 +5,9 @@
 #include <vecthar/system/window/Window.h>
 #include <stdexcept>
 #include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <vecthar/base/logger/Logger.h>
 
 namespace vecthar {
 
@@ -60,9 +63,9 @@ Window::~Window() {
 /**
  * Returns a pointer to GLFWwindow
  */
-GLFWwindow* Window::getGLFWWindow() const {
-    return _window;
-}
+// GLFWwindow* Window::getGLFWWindow() const {
+//     return _window;
+// }
 
 int Window::getWidth() const {
     int w, h;

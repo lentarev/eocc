@@ -1,5 +1,4 @@
 #include "Menu.h"
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vecthar/Engine.h>
 #include <vecthar/assets/mesh/structures/MeshData.h>

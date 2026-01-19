@@ -5,9 +5,9 @@
 #ifndef VECTHAR_SHADER_H
 #define VECTHAR_SHADER_H
 
-#include <glad/glad.h>
 #include <iostream>
 #include <string>
+#include <vecthar/base/OpenGLTypes.h>
 
 /**
  * @brief Manages an OpenGL shader program (vertex + fragment).
