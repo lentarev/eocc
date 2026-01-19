@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 03.01.2026.
 //
 
-#ifndef EOCC_ENGINE_H
-#define EOCC_ENGINE_H
+#ifndef VECTHAR_ENGINE_H
+#define VECTHAR_ENGINE_H
 
 #include <memory>
 #include <vecthar/scene/base/SceneBase.h>
@@ -43,4 +43,4 @@ private:
 
 }  // namespace vecthar
 
-#endif  // EOCC_ENGINE_H
+#endif  // VECTHAR_ENGINE_H

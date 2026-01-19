@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 02.01.2026.
 //
 
-#ifndef EOCC_LOGGER_H
-#define EOCC_LOGGER_H
+#ifndef VECTHAR_LOGGER_H
+#define VECTHAR_LOGGER_H
 
 #include <cstdio>
 
@@ -28,4 +28,4 @@ private:
 
 }  // namespace vecthar
 
-#endif  // EOCC_LOGGER_H
+#endif  // VECTHAR_LOGGER_H

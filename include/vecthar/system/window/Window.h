@@ -2,14 +2,14 @@
 // Created by Egor Lentarev on 02.01.2026.
 //
 
-#ifndef EOCC_WINDOW_H
-#define EOCC_WINDOW_H
+#ifndef VECTHAR_WINDOW_H
+#define VECTHAR_WINDOW_H
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vecthar/base/logger/Logger.h>
 
-// #include <eocc/base/OpenGLTypes.h>
+// #include <vecthar/base/OpenGLTypes.h>
 
 namespace vecthar {
 
@@ -36,4 +36,4 @@ private:
 
 }  // namespace vecthar
 
-#endif  // EOCC_WINDOW_H
+#endif  // VECTHAR_WINDOW_H

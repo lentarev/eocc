@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 03.01.2026.
 //
 
-#ifndef EOCC_RENDERER_H
-#define EOCC_RENDERER_H
+#ifndef VECTHAR_RENDERER_H
+#define VECTHAR_RENDERER_H
 
 #include <memory>
 #include <glm/gtc/matrix_transform.hpp>
@@ -47,4 +47,4 @@ private:
 
 }  // namespace vecthar
 
-#endif  // EOCC_RENDERER_H
+#endif  // VECTHAR_RENDERER_H

@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 05.01.2026.
 //
 
-#ifndef EOCC_ROTATE_H
-#define EOCC_ROTATE_H
+#ifndef VECTHAR_ROTATE_H
+#define VECTHAR_ROTATE_H
 
 namespace vecthar {
 
@@ -16,4 +16,4 @@ struct Rotate {
 
 }  // namespace vecthar
 
-#endif  // EOCC_ROTATE_H
+#endif  // VECTHAR_ROTATE_H

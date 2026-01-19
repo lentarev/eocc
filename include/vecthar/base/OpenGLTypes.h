@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 18.01.2026.
 //
 
-#ifndef EOCC_OPENGL_TYPES_H
-#define EOCC_OPENGL_TYPES_H
+#ifndef VECTHAR_OPENGL_TYPES_H
+#define VECTHAR_OPENGL_TYPES_H
 
 namespace vecthar {
 
@@ -17,4 +17,4 @@ using GLboolean = unsigned char;
 
 }  // namespace vecthar
 
-#endif  // EOCC_OPENGL_TYPES_H
+#endif  // VECTHAR_OPENGL_TYPES_H

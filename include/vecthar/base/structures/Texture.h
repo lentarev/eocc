@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 05.01.2026.
 //
 
-#ifndef EOCC_TEXTURE_H
-#define EOCC_TEXTURE_H
+#ifndef VECTHAR_TEXTURE_H
+#define VECTHAR_TEXTURE_H
 
 namespace vecthar {
 
@@ -14,4 +14,4 @@ struct Texture {
 
 }  // namespace vecthar
 
-#endif  // EOCC_TEXTURE_H
+#endif  // VECTHAR_TEXTURE_H

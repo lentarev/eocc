@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 09.01.2026.
 //
 
-#ifndef EOCC_PRIMITIVE_H
-#define EOCC_PRIMITIVE_H
+#ifndef VECTHAR_PRIMITIVE_H
+#define VECTHAR_PRIMITIVE_H
 
 #include <vecthar/assets/mesh/structures/MeshData.h>
 
@@ -18,4 +18,4 @@ public:
 
 }  // namespace vecthar
 
-#endif  // EOCC_PRIMITIVE_H
+#endif  // VECTHAR_PRIMITIVE_H

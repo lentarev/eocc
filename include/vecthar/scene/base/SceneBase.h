@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 07.01.2026.
 //
 
-#ifndef EOCC_SCENE_BASE_H
-#define EOCC_SCENE_BASE_H
+#ifndef VECTHAR_SCENE_BASE_H
+#define VECTHAR_SCENE_BASE_H
 
 #include <vecthar/scene/base/SceneBase.h>
 
@@ -47,4 +47,4 @@ protected:
 
 }  // namespace vecthar
 
-#endif  // EOCC_SCENE_BASE_H
+#endif  // VECTHAR_SCENE_BASE_H

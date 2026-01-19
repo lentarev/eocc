@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 05.01.2026.
 //
 
-#ifndef EOCC_MESH_DATA_H
-#define EOCC_MESH_DATA_H
+#ifndef VECTHAR_MESH_DATA_H
+#define VECTHAR_MESH_DATA_H
 
 #include <vector>
 
@@ -18,4 +18,4 @@ struct MeshData {
 
 }  // namespace vecthar
 
-#endif  // EOCC_MESH_DATA_H
+#endif  // VECTHAR_MESH_DATA_H

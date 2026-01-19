@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 09.01.2026.
 //
 
-#ifndef EOCC_CUBE_GEOMETRY_H
-#define EOCC_CUBE_GEOMETRY_H
+#ifndef VECTHAR_CUBE_GEOMETRY_H
+#define VECTHAR_CUBE_GEOMETRY_H
 
 #include <glad/glad.h>
 #include <vector>
@@ -42,4 +42,4 @@ public:
 
 }  // namespace vecthar
 
-#endif  // EOCC_CUBE_GEOMETRY_H
+#endif  // VECTHAR_CUBE_GEOMETRY_H

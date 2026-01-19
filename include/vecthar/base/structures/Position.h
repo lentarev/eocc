@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 05.01.2026.
 //
 
-#ifndef EOCC_POSITION_H
-#define EOCC_POSITION_H
+#ifndef VECTHAR_POSITION_H
+#define VECTHAR_POSITION_H
 
 namespace vecthar {
 
@@ -15,4 +15,4 @@ struct Position {
 
 }  // namespace vecthar
 
-#endif  // EOCC_POSITION_H
+#endif  // VECTHAR_POSITION_H

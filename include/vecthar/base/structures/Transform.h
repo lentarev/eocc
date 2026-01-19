@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 12.01.2026.
 //
 
-#ifndef EOCC_TRANSFORM_H
-#define EOCC_TRANSFORM_H
+#ifndef VECTHAR_TRANSFORM_H
+#define VECTHAR_TRANSFORM_H
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -28,4 +28,4 @@ struct Transform {
 
 }  // namespace vecthar
 
-#endif  // EOCC_TRANSFORM_H
+#endif  // VECTHAR_TRANSFORM_H

@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 13.01.2026.
 //
 
-#ifndef EOCC_CAMERA_H
-#define EOCC_CAMERA_H
+#ifndef VECTHAR_CAMERA_H
+#define VECTHAR_CAMERA_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -38,4 +38,4 @@ private:
 
 }  // namespace vecthar
 
-#endif  // EOCC_CAMERA_H
+#endif  // VECTHAR_CAMERA_H

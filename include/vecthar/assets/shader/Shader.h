@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 05.01.2026.
 //
 
-#ifndef EOCC_SHADER_H
-#define EOCC_SHADER_H
+#ifndef VECTHAR_SHADER_H
+#define VECTHAR_SHADER_H
 
 #include <glad/glad.h>
 #include <iostream>
@@ -56,4 +56,4 @@ protected:
 
 }  // namespace vecthar
 
-#endif  // EOCC_SHADER_H
+#endif  // VECTHAR_SHADER_H

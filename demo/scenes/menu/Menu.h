@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 06.01.2026.
 //
 
-#ifndef EOCC_MENU_H
-#define EOCC_MENU_H
+#ifndef VECTHAR_MENU_H
+#define VECTHAR_MENU_H
 
 #include <memory>
 #include <string>
@@ -37,4 +37,4 @@ private:
     vecthar::Transform _transform;
 };
 
-#endif  // EOCC_MENU_H
+#endif  // VECTHAR_MENU_H

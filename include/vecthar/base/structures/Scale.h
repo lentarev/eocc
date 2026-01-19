@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 05.01.2026.
 //
 
-#ifndef EOCC_SCALE_H
-#define EOCC_SCALE_H
+#ifndef VECTHAR_SCALE_H
+#define VECTHAR_SCALE_H
 
 namespace vecthar {
 
@@ -15,4 +15,4 @@ struct Scale {
 
 }  // namespace vecthar
 
-#endif  // EOCC_SCALE_H
+#endif  // VECTHAR_SCALE_H

@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 12.01.2026.
 //
 
-#ifndef EOCC_MATERIAL_H
-#define EOCC_MATERIAL_H
+#ifndef VECTHAR_MATERIAL_H
+#define VECTHAR_MATERIAL_H
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -17,4 +17,4 @@ struct Material {
 
 }  // namespace vecthar
 
-#endif  // EOCC_MATERIAL_H
+#endif  // VECTHAR_MATERIAL_H

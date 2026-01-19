@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 06.01.2026.
 //
 
-#ifndef EOCC_LEVEL1_H
-#define EOCC_LEVEL1_H
+#ifndef VECTHAR_LEVEL1_H
+#define VECTHAR_LEVEL1_H
 
 #include <memory>
 #include <string>
@@ -37,4 +37,4 @@ private:
     vecthar::Transform _transform;
 };
 
-#endif  // EOCC_LEVEL1_H
+#endif  // VECTHAR_LEVEL1_H

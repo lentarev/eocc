@@ -2,8 +2,8 @@
 // Created by Egor Lentarev on 09.01.2026.
 //
 
-#ifndef EOCC_MESH_H
-#define EOCC_MESH_H
+#ifndef VECTHAR_MESH_H
+#define VECTHAR_MESH_H
 
 #include <vector>
 #include <vecthar/assets/mesh/structures/MeshData.h>
@@ -37,4 +37,4 @@ private:
 
 }  // namespace vecthar
 
-#endif  // EOCC_MESH_H
+#endif  // VECTHAR_MESH_H
