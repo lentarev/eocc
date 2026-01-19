@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
 
 # Язык проекта — только C и C++
-project(eocc LANGUAGES C CXX)
+project(vecthar LANGUAGES C CXX)
 
 # --- Подключаем GLFW из third_party ---
 option(GLFW_BUILD_EXAMPLES OFF)
@@ -65,17 +65,17 @@ endif()
 
 # Ищем все .cpp и .c файлы движка + glad
 file(GLOB_RECURSE ENGINE_SOURCES
-    src/eocc/*.cpp
-    src/eocc/*.c
+    src/vecthar/*.cpp
+    src/vecthar/*.c
     third_party/glad/src/glad.c
 )
 
 # Создаём статическую библиотеку движка
-add_library(eocc_engine STATIC ${ENGINE_SOURCES})
+add_library(vecthar_engine STATIC ${ENGINE_SOURCES})
 
 # Публичные заголовки: include/
 # Приватные: src/ (только для компиляции самой библиотеки)
-target_include_directories(eocc_engine
+target_include_directories(vecthar_engine
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
@@ -87,7 +87,7 @@ target_include_directories(eocc_engine
 )
 
 # Линкуем зависимости
-target_link_libraries(eocc_engine PRIVATE glfw OpenGL::GL)
+target_link_libraries(vecthar_engine PRIVATE glfw OpenGL::GL)
 
 # ===============================
 # СОБИРАЕМ ДЕМО
@@ -102,17 +102,17 @@ file(GLOB_RECURSE DEMO_SOURCES
 file(COPY demo/shaders DESTINATION ${CMAKE_BINARY_DIR}/)
 
 # Цель демо
-add_executable(eocc_demo ${DEMO_SOURCES})
+add_executable(vecthar_demo ${DEMO_SOURCES})
 
 # Демо зависит от движка
-target_link_libraries(eocc_demo PRIVATE eocc_engine)
+target_link_libraries(vecthar_demo PRIVATE vecthar_engine)
 
 # Демо может использовать публичный API
-target_include_directories(eocc_demo PRIVATE
+target_include_directories(vecthar_demo PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/demo 
 )
 
 # Применяем C++20
-target_compile_features(eocc_engine PUBLIC cxx_std_20)
-target_compile_features(eocc_demo PRIVATE cxx_std_20)
+target_compile_features(vecthar_engine PUBLIC cxx_std_20)
+target_compile_features(vecthar_demo PRIVATE cxx_std_20)

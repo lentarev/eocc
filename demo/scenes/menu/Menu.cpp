@@ -1,22 +1,22 @@
 #include "Menu.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <eocc/Engine.h>
-#include <eocc/assets/mesh/structures/MeshData.h>
-#include <eocc/assets/mesh/primitives/Primitive.h>
-#include <eocc/assets/mesh/Mesh.h>
-#include <eocc/renderer/Renderer.h>
-#include <eocc/assets/shader/Shader.h>
+#include <vecthar/Engine.h>
+#include <vecthar/assets/mesh/structures/MeshData.h>
+#include <vecthar/assets/mesh/primitives/Primitive.h>
+#include <vecthar/assets/mesh/Mesh.h>
+#include <vecthar/renderer/Renderer.h>
+#include <vecthar/assets/shader/Shader.h>
 
 #include "scenes/level1/Level1.h"
 
 Menu::Menu() {
-    _shader = std::make_unique<eocc::Shader>();
+    _shader = std::make_unique<vecthar::Shader>();
     _shader->createProgram(_shader->read("./shaders/basic.vert"), _shader->read("./shaders/basic.frag"));
 
-    eocc::MeshData cubeData = eocc::Primitive::createCube();
+    vecthar::MeshData cubeData = vecthar::Primitive::createCube();
 
-    _cubeMesh = std::make_unique<eocc::Mesh>(cubeData);
+    _cubeMesh = std::make_unique<vecthar::Mesh>(cubeData);
     _cubeMaterial.baseColor = {1.0f, 0.0f, 0.0f};
 }
 
@@ -39,7 +39,7 @@ void Menu::update(float deltaTime, float totalTime) {
     _transform.rotation.y = glm::radians(45.0f) * totalTime;
 }
 
-void Menu::draw(eocc::Renderer& renderer) {
+void Menu::draw(vecthar::Renderer& renderer) {
     renderer.useShaderProgram(_shader->getProgram());
     // Drawing a cube using a renderer
     renderer.drawMesh(*_cubeMesh, _cubeMaterial, _transform.getModelMatrix());

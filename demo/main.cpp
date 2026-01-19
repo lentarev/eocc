@@ -1,7 +1,7 @@
 #include <memory>
 #include <GLFW/glfw3.h>
-#include <eocc/Engine.h>
-#include <eocc/base/logger/Logger.h>
+#include <vecthar/Engine.h>
+#include <vecthar/base/logger/Logger.h>
 
 // Scenes
 #include "scenes/menu/Menu.h"
@@ -14,12 +14,12 @@ int main() {
     }
 
     try {
-        const auto engine = std::make_unique<eocc::Engine>();
+        const auto engine = std::make_unique<vecthar::Engine>();
         engine->setCurrentScene(std::make_unique<Menu>());
         engine->run();
 
     } catch (const std::exception& e) {
-        eocc::Logger::log(1, "Fatal error: %s\n", e.what());
+        vecthar::Logger::log(1, "Fatal error: %s\n", e.what());
         return -1;
     }
 
