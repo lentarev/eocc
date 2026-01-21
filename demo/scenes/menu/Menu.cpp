@@ -1,11 +1,13 @@
 #include "Menu.h"
-#include <GLFW/glfw3.h>
 #include <vecthar/Engine.h>
 #include <vecthar/assets/mesh/structures/MeshData.h>
 #include <vecthar/assets/mesh/primitives/Primitive.h>
 #include <vecthar/assets/mesh/Mesh.h>
 #include <vecthar/renderer/Renderer.h>
 #include <vecthar/assets/shader/Shader.h>
+#include <vecthar/input/Key.h>
+
+#include <iostream>
 
 #include "scenes/level1/Level1.h"
 
@@ -25,10 +27,12 @@ Menu::~Menu() {}
  * Input
  */
 void Menu::onKey(int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+    if (key == vecthar::KEY_SPACE && action == 1) {
         // Transition to another scene
         this->getEngine()->setCurrentScene(std::make_unique<Level1>());
     }
+
+    // std::cout << "key: " << key << " action: " << action << std::endl;
 }
 
 /**
