@@ -98,11 +98,13 @@ file(GLOB_RECURSE DEMO_SOURCES
     demo/*.cpp
 )
 
-# Копируем шейдеры в build-директорию
-file(COPY demo/shaders DESTINATION ${CMAKE_BINARY_DIR}/)
+
 
 # Цель демо
 add_executable(vecthar_demo ${DEMO_SOURCES})
+
+# Копируем шейдеры в build-директорию
+file(COPY demo/shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 # Демо зависит от движка
 target_link_libraries(vecthar_demo PRIVATE vecthar_engine)
