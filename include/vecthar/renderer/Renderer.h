@@ -22,8 +22,16 @@ public:
     Renderer();
     ~Renderer();
 
+    /// @brief Use shader program
+    /// @param program
+    void useShaderProgram(GLuint program);
+
+    // 3D
     /// Begin frame
     void beginFrame(const Camera& camera, float aspectRatio);
+
+    /// End frame (optional)
+    void endFrame();
 
     /// @brief Draw mesh
     /// @param mesh
@@ -31,10 +39,23 @@ public:
     /// @param modelMatrix
     void drawMesh(const Mesh& mesh, const Material& material, const glm::mat4& modelMatrix);
 
-    /// End frame (optional)
-    void endFrame();
+    // 2D
+    /// @brief Begin UI frame
+    /// @param windowWidth
+    /// @param windowHeight
+    void beginUIFrame(int windowWidth, int windowHeight);
 
-    void useShaderProgram(GLuint program);
+    /// @brief End UI frame
+    void endUIFrame();
+
+    // Optional: Method for rendering text
+
+    /// @brief Draw text
+    /// @param text
+    /// @param x
+    /// @param y
+    /// @param color
+    void drawText(const std::string& text, float x, float y, const glm::vec3& color = glm::vec3(1.0f));
 
 private:
     GLuint _program = 0;
@@ -43,6 +64,10 @@ private:
     glm::mat4 _projectionMatrix;
 
     bool _frameBegun = false;
+
+    // 2D UI
+    GLuint _uiProgram = 0;
+    bool _uiInit = false;
 };
 
 }  // namespace vecthar
