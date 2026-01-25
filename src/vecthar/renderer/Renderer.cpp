@@ -5,6 +5,7 @@
 #include <vecthar/renderer/Renderer.h>
 #include <vecthar/assets/mesh/Mesh.h>
 #include <vecthar/camera/Camera.h>
+#include <vecthar/ui/TextRenderer.h>
 
 #include <glad/glad.h>
 
@@ -12,7 +13,7 @@ namespace vecthar {
 
 Renderer::Renderer() {}
 
-Renderer::~Renderer() {}
+Renderer::~Renderer() = default;
 
 void Renderer::useShaderProgram(GLuint program) {
     _program = program;
@@ -64,6 +65,34 @@ void Renderer::drawMesh(const Mesh& mesh, const Material& material, const glm::m
     glBindVertexArray(mesh.getVAO());
     glDrawElements(GL_TRIANGLES, mesh.getIndexCount(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+}
+
+/**
+ * Draw text
+ */
+void Renderer::drawText(const std::string& text, float x, float y, float scale, const glm::vec3& color) {
+    if (_textRenderer) {
+        _textRenderer->renderText(text, x, y, scale, color);
+    }
+}
+
+/**
+ * Begin ui frame
+ */
+void Renderer::beginUIFrame(int width, int height) {
+    glm::mat4 ortho = glm::ortho(0.0f, (float)width, (float)height, 0.0f, -1.0f, 1.0f);
+    if (_textRenderer) {
+        _textRenderer->beginFrame(ortho);
+    }
+}
+
+/**
+ * End ui frame
+ */
+void Renderer::endUIFrame() {
+    if (_textRenderer) {
+        _textRenderer->endFrame();
+    }
 }
 
 }  // namespace vecthar

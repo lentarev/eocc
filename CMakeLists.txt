@@ -82,12 +82,35 @@ target_include_directories(vecthar_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw-3.4/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glm
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/SOIL2/src
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 # Линкуем зависимости
-target_link_libraries(vecthar_engine PRIVATE glfw OpenGL::GL)
+target_link_libraries(vecthar_engine PRIVATE glfw OpenGL::GL soil2)
+
+
+# ===============================
+# КОПИРОВАНИЕ СИСТЕМНЫХ ШЕЙДЕРОВ ДВИЖКА
+# ===============================
+
+set(SYS_SHADER_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/sys_shaders")
+set(SYS_SHADER_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/shaders_sys")
+
+add_custom_command(
+    OUTPUT ${SYS_SHADER_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${SYS_SHADER_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different ${SYS_SHADER_SOURCE_DIR} ${SYS_SHADER_DEST_DIR}
+    COMMENT "Copying Vecthar system shaders to ${SYS_SHADER_DEST_DIR}"
+    VERBATIM
+)
+
+add_custom_target(vecthar-copy-sys-shaders ALL
+    DEPENDS ${SYS_SHADER_DEST_DIR}
+)
+
+add_dependencies(vecthar_engine vecthar-copy-sys-shaders)
 
 # ===============================
 # СОБИРАЕМ ДЕМО
@@ -98,13 +121,8 @@ file(GLOB_RECURSE DEMO_SOURCES
     demo/*.cpp
 )
 
-
-
 # Цель демо
 add_executable(vecthar_demo ${DEMO_SOURCES})
-
-# Копируем шейдеры в build-директорию
-file(COPY demo/shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
 # Демо зависит от движка
 target_link_libraries(vecthar_demo PRIVATE vecthar_engine)
@@ -114,6 +132,27 @@ target_include_directories(vecthar_demo PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/demo 
 )
+
+# ===============================
+# КОПИРОВАНИЕ ДЕМО-ШЕЙДЕРОВ
+# ===============================
+
+set(DEMO_SHADER_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/demo/shaders")
+set(DEMO_SHADER_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/shaders")
+
+add_custom_command(
+    OUTPUT ${DEMO_SHADER_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO_SHADER_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different ${DEMO_SHADER_SOURCE_DIR} ${DEMO_SHADER_DEST_DIR}
+    COMMENT "Copying demo shaders to ${DEMO_SHADER_DEST_DIR}"
+    VERBATIM
+)
+
+add_custom_target(demo-copy-shaders ALL
+    DEPENDS ${DEMO_SHADER_DEST_DIR}
+)
+
+add_dependencies(vecthar_demo demo-copy-shaders)
 
 # Применяем C++20
 target_compile_features(vecthar_engine PUBLIC cxx_std_20)

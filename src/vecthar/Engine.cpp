@@ -113,6 +113,13 @@ void Engine::run() {
             _renderer->endFrame();
         }
 
+        // --- Render UI ---
+        if (_currentScene) {
+            _renderer->beginUIFrame(_window->getWidth(), _window->getHeight());
+            _currentScene->drawUI(*_renderer);
+            _renderer->endUIFrame();
+        }
+
         // swap buffers
         glfwSwapBuffers(_window->getGLFWWindow());
 

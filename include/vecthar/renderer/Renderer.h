@@ -11,6 +11,13 @@
 
 #include <vecthar/base/OpenGLTypes.h>
 
+// Forward declaration of classes
+namespace vecthar::ui {
+
+class TextRenderer;
+
+}
+
 namespace vecthar {
 
 // Forward declaration of classes
@@ -68,6 +75,9 @@ private:
     // 2D UI
     GLuint _uiProgram = 0;
     bool _uiInit = false;
+
+    // Text renderer
+    std::unique_ptr<vecthar::ui::TextRenderer> _textRenderer;
 };
 
 }  // namespace vecthar
