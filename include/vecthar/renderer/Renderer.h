@@ -78,6 +78,8 @@ private:
 
     // Text renderer
     std::unique_ptr<vecthar::ui::TextRenderer> _textRenderer;
+
+    GLboolean _prevDepthTest, _prevCullFace, _prevBlend;
 };
 
 }  // namespace vecthar

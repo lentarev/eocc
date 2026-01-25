@@ -31,6 +31,12 @@ Engine::Engine() {
     // 1. Window subsystem
     _window = std::make_unique<Window>(800, 600, "OpenGL Test Window");
 
+    std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
+    GLenum err = glGetError();
+    if (err != GL_NO_ERROR) {
+        std::cerr << "OpenGL error after Window init: " << err << "\n";
+    }
+
     // 2. Renderer subsystem
     _renderer = std::make_unique<Renderer>();
 

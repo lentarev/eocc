@@ -41,13 +41,12 @@ private:
     GLuint _vao = 0;
     GLuint _vbo = 0;
     GLuint _texture = 0;
-    GLuint _program = 0;
 
     std::vector<Vertex> _buffer;
     glm::mat4 _projMatrix;
     bool _isRendering = false;
 
-    static constexpr size_t MAX_VERTICES = 6000;  // ~1000 symbols
+    static constexpr size_t MAX_VERTICES = 512;  // ~1000 symbols
 
     std::unique_ptr<vecthar::Shader> _shader;
 };

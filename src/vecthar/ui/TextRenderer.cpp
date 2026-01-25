@@ -17,19 +17,28 @@ namespace vecthar::ui {
  */
 TextRenderer::TextRenderer() {
     _shader = std::make_unique<vecthar::Shader>();
-    _shader->createProgram(_shader->read("./sys_shaders/ui/text.vert"), _shader->read("./ui/sys_shaders/text.frag"));
+    _shader->createProgram(_shader->read("./sys_shaders/ui/text.vert"), _shader->read("./sys_shaders/ui/text.frag"));
 
-    // Create VAO/VBO
+    if (_shader->getProgram() == 0) {
+        std::cerr << "Shader failed to load!\n";
+        return;
+    }
+
+    // // Create VAO/VBO
     glGenVertexArrays(1, &_vao);
-    glGenBuffers(1, &_vbo);
     glBindVertexArray(_vao);
+
+    glGenBuffers(1, &_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+
     glBufferData(GL_ARRAY_BUFFER, MAX_VERTICES * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glEnableVertexAttribArray(0);
+
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(float)));
     glEnableVertexAttribArray(1);
+
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(4 * sizeof(float)));
     glEnableVertexAttribArray(2);
 
@@ -46,26 +55,31 @@ TextRenderer::~TextRenderer() {
 
     if (_texture)
         glDeleteTextures(1, &_texture);
-
-    if (_program)
-        glDeleteProgram(_program);
 }
 
 /**
  * Load font atlas
  */
 void TextRenderer::loadFontAtlas(const char* path) {
-    _texture = SOIL_load_OGL_texture(path, SOIL_LOAD_L, SOIL_CREATE_NEW_ID, SOIL_FLAG_MULTIPLY_ALPHA | SOIL_FLAG_NTSC_SAFE_RGB);
+    int width, height, channels;
+    unsigned char* data = SOIL_load_image(path, &width, &height, &channels, 1);  // 1 канал
 
-    if (!_texture) {
-        std::cerr << "Failed to load font atlas: " << path << std::endl;
+    if (!data) {
+        std::cerr << "Failed to load image: " << path << "\n";
         return;
     }
 
+    glGenTextures(1, &_texture);
     glBindTexture(GL_TEXTURE_2D, _texture);
+
+    // Используем GL_RED (Core Profile совместимый)
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
     glBindTexture(GL_TEXTURE_2D, 0);
+    SOIL_free_image_data(data);
 }
 
 /**
@@ -89,14 +103,17 @@ void TextRenderer::renderText(const std::string& text, float x, float y, float s
     const float charHeight = 8.0f * scale;
 
     for (unsigned char c : text) {
+        // std::cout << "Char: '" << c << "' (code=" << (int)c << ")\n";
+
         if (c < 0 || c >= 128)
+            // std::cout << "  → skipped\n";
             continue;
 
         // UV в атласе 1024x8
         float u0 = (c * 8.0f) / 1024.0f;
         float u1 = ((c + 1) * 8.0f) / 1024.0f;
-        float v0 = 0.0f;
-        float v1 = 1.0f;
+        float v0 = 1.0f;
+        float v1 = 0.0f;
 
         // Позиции
         float x0 = cursorX;
@@ -141,13 +158,18 @@ void TextRenderer::flush() {
     if (_buffer.empty())
         return;
 
-    glUseProgram(_program);
-    glUniformMatrix4fv(glGetUniformLocation(_program, "u_Proj"), 1, GL_FALSE, &_projMatrix[0][0]);
+    glUseProgram(_shader->getProgram());
+    glUniformMatrix4fv(glGetUniformLocation(_shader->getProgram(), "u_Proj"), 1, GL_FALSE, &_projMatrix[0][0]);
+
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
+
     glBindVertexArray(_vao);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     glBufferSubData(GL_ARRAY_BUFFER, 0, _buffer.size() * sizeof(Vertex), _buffer.data());
     glDrawArrays(GL_TRIANGLES, 0, _buffer.size());
+    // glDrawArrays(GL_POINTS, 0, _buffer.size());
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     glUseProgram(0);

@@ -96,7 +96,7 @@ target_link_libraries(vecthar_engine PRIVATE glfw OpenGL::GL soil2)
 # ===============================
 
 set(SYS_SHADER_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/sys_shaders")
-set(SYS_SHADER_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/shaders_sys")
+set(SYS_SHADER_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/sys_shaders")
 
 add_custom_command(
     OUTPUT ${SYS_SHADER_DEST_DIR}
@@ -111,6 +111,29 @@ add_custom_target(vecthar-copy-sys-shaders ALL
 )
 
 add_dependencies(vecthar_engine vecthar-copy-sys-shaders)
+
+# ===============================
+# КОПИРОВАНИЕ СИСТЕМНЫХ АССЕТОВ ДВИЖКА
+# ===============================
+
+set(SYS_ASSETS_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/sys_assets")
+set(SYS_ASSETS_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/sys_assets")
+
+add_custom_command(
+    OUTPUT ${SYS_ASSETS_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${SYS_ASSETS_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different ${SYS_ASSETS_SOURCE_DIR} ${SYS_ASSETS_DEST_DIR}
+    COMMENT "Copying Vecthar system shaders to ${SYS_ASSETS_DEST_DIR}"
+    VERBATIM
+)
+
+add_custom_target(vecthar-copy-sys-assets ALL
+    DEPENDS ${SYS_ASSETS_DEST_DIR}
+)
+
+add_dependencies(vecthar_engine vecthar-copy-sys-assets)
+
+
 
 # ===============================
 # СОБИРАЕМ ДЕМО

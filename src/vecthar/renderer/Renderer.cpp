@@ -8,10 +8,17 @@
 #include <vecthar/ui/TextRenderer.h>
 
 #include <glad/glad.h>
+#include <iostream>
 
 namespace vecthar {
 
-Renderer::Renderer() {}
+/**
+ * Constructor
+ */
+Renderer::Renderer() {
+    _textRenderer = std::make_unique<ui::TextRenderer>();
+    _textRenderer->loadFontAtlas("./sys_assets/fonts/font8x8_atlas_1024x8.png");
+}
 
 Renderer::~Renderer() = default;
 
@@ -28,7 +35,7 @@ void Renderer::beginFrame(const Camera& camera, float aspectRatio) {
     _frameBegun = true;
 
     // Очистка
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -80,7 +87,23 @@ void Renderer::drawText(const std::string& text, float x, float y, float scale, 
  * Begin ui frame
  */
 void Renderer::beginUIFrame(int width, int height) {
+    // Save the current state
+    GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
+    GLboolean cullFaceEnabled = glIsEnabled(GL_CULL_FACE);
+    GLboolean blendEnabled = glIsEnabled(GL_BLEND);
+
+    _prevDepthTest = depthTestEnabled;
+    _prevCullFace = cullFaceEnabled;
+    _prevBlend = blendEnabled;
+
+    // Setting up UI state
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glm::mat4 ortho = glm::ortho(0.0f, (float)width, (float)height, 0.0f, -1.0f, 1.0f);
+
     if (_textRenderer) {
         _textRenderer->beginFrame(ortho);
     }
@@ -93,6 +116,20 @@ void Renderer::endUIFrame() {
     if (_textRenderer) {
         _textRenderer->endFrame();
     }
+
+    // Restoring the previous state
+    if (_prevDepthTest)
+        glEnable(GL_DEPTH_TEST);
+    else
+        glDisable(GL_DEPTH_TEST);
+    if (_prevCullFace)
+        glEnable(GL_CULL_FACE);
+    else
+        glDisable(GL_CULL_FACE);
+    if (_prevBlend)
+        glEnable(GL_BLEND);
+    else
+        glDisable(GL_BLEND);
 }
 
 }  // namespace vecthar

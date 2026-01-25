@@ -54,4 +54,8 @@ void Menu::draw(vecthar::Renderer& renderer) {
 /**
  * Draw UI
  */
-void Menu::drawUI(vecthar::Renderer& renderer) {}
+void Menu::drawUI(vecthar::Renderer& renderer) {
+    renderer.drawText("Hello Vecthar", 100, 100, 4.0f, {0.2f, 0.5f, 1.0f});
+
+    // renderer.drawText("A", 100, 100, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+}
