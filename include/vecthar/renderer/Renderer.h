@@ -55,7 +55,7 @@ public:
     /// @param x
     /// @param y
     /// @param color
-    void drawText(const std::string& text, float x, float y, const glm::vec3& color = glm::vec3(1.0f));
+    void drawText(const std::string& text, float x, float y, float scale = 1.0f, const glm::vec3& color = {1.0f, 1.0f, 1.0f});
 
 private:
     GLuint _program = 0;
