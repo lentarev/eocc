@@ -21,6 +21,8 @@ Menu::Menu() : _startButton(std::make_unique<vecthar::ui::Button>(300, 400, 200,
 
     _cubeMesh = std::make_unique<vecthar::Mesh>(cubeData);
     _cubeMaterial.baseColor = {1.0f, 0.0f, 0.0f};
+
+    _transform.position = glm::vec3(-2.0f, 0.0f, 0.0f);
 }
 
 Menu::~Menu() = default;
