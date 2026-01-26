@@ -20,6 +20,15 @@ static void keyCallback(GLFWwindow* window, int key, int scancode, int action, i
     }
 }
 
+static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+    double xpos, ypos;
+    glfwGetCursorPos(window, &xpos, &ypos);
+    vecthar::Engine* engine = static_cast<vecthar::Engine*>(glfwGetWindowUserPointer(window));
+    if (engine) {
+        engine->onMouseButton(button, action, xpos, ypos);
+    }
+}
+
 namespace vecthar {
 
 /// Constructor
@@ -44,8 +53,9 @@ Engine::Engine() {
     // Passing a pointer to Engine to the GLFW window
     glfwSetWindowUserPointer(_window->getGLFWWindow(), this);
 
-    // Set callback
+    // Set callbacks
     glfwSetKeyCallback(_window->getGLFWWindow(), keyCallback);
+    glfwSetMouseButtonCallback(_window->getGLFWWindow(), mouseButtonCallback);
 }
 
 /// Destructor
@@ -62,6 +72,29 @@ void Engine::onKey(int key, int scancode, int action, int mods) {
             _currentScene->onKey(key, scancode, action, mods);
         }
     }
+}
+
+/// @brief Handles mouse events.
+/// @param button
+/// @param action
+/// @param xpos
+/// @param ypos
+void Engine::onMouseButton(int button, int action, double xpos, double ypos) {
+    _mouseX = xpos;
+    _mouseY = ypos;
+
+    // Преобразуем координаты мыши в framebuffer-пространство
+    int winW, winH, fbW, fbH;
+    glfwGetWindowSize(_window->getGLFWWindow(), &winW, &winH);
+    glfwGetFramebufferSize(_window->getGLFWWindow(), &fbW, &fbH);
+
+    float scaleX = static_cast<float>(fbW) / winW;
+    float scaleY = static_cast<float>(fbH) / winH;
+
+    _mouseX *= scaleX;
+    _mouseY *= scaleY;
+
+    _mousePressed = (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS);
 }
 
 /// @brief Set current scene

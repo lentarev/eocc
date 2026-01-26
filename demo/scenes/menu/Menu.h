@@ -13,6 +13,11 @@
 #include <vecthar/base/structures/Transform.h>
 
 // Forward declaration of classes
+// namespace vecthar::ui {
+// class Button;
+//}
+
+// Forward declaration of classes
 namespace vecthar {
 
 class Mesh;
@@ -37,6 +42,8 @@ private:
     std::unique_ptr<vecthar::Shader> _shader;
     vecthar::Material _cubeMaterial;
     vecthar::Transform _transform;
+
+    // vecthar::ui::Button _startButton;
 
     // std::vector<glm::vec3> _positions;
     // float _rotation = 0.0f;

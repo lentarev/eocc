@@ -7,6 +7,7 @@
 #include <vecthar/assets/shader/Shader.h>
 #include <vecthar/input/Key.h>
 #include <vecthar/base/FPSCounter.h>
+#include <vecthar/ui/Button.h>
 
 #include <iostream>
 
