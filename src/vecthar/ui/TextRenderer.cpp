@@ -101,6 +101,7 @@ void TextRenderer::renderText(const std::string& text, float x, float y, float s
     float cursorX = x;
     const float charWidth = 8.0f * scale;
     const float charHeight = 8.0f * scale;
+    const float yOffset = 2.0f * scale;
 
     for (unsigned char c : text) {
         // std::cout << "Char: '" << c << "' (code=" << (int)c << ")\n";
@@ -117,9 +118,9 @@ void TextRenderer::renderText(const std::string& text, float x, float y, float s
 
         // Позиции
         float x0 = cursorX;
-        float y0 = y;
+        float y0 = y - yOffset;
         float x1 = cursorX + charWidth;
-        float y1 = y + charHeight;
+        float y1 = y - yOffset + charHeight;
 
         // Добавляем 6 вершин (2 треугольника)
         _buffer.insert(_buffer.end(), {
