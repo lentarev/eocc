@@ -15,22 +15,26 @@ namespace vecthar::ui {
 
 class Button {
 public:
-    Button(float x, float y, float width, float height, const std::string& text);
+    Button();
     ~Button();
 
     bool contains(float mouseX, float mouseY) const;
 
     void render(Renderer& renderer, float scale = 3.0f) const;
 
-    // Getters for debugging (optional)
+    // Getters
     float getX() const;
     float getY() const;
     float getWidth() const;
     float getHeight() const;
+    std::string getLabel() const;
 
     // Setters
     void setX(const float x);
     void setY(const float y);
+    void setWidth(const float width);
+    void setHeight(const float height);
+    void setLabel(const std::string& text);
 
 private:
     float _x, _y, _width, _height;

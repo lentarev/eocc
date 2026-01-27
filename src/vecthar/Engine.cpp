@@ -124,7 +124,6 @@ void Engine::onResizeWindow(const int width, const int height) {
     // Update viewport
     glViewport(0, 0, width, height);
     if (_currentScene) {
-        std::cout << "width: " << width << " height: " << height << std::endl;
         _currentScene->onResizeWindow();
     }
 }
