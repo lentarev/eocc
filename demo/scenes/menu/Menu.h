@@ -38,6 +38,7 @@ public:
     void draw(vecthar::Renderer& renderer) override;
     void drawUI(vecthar::Renderer& renderer, const vecthar::FPSCounter& fps) override;
     void onKey(int key, int scancode, int action, int mods) override;
+    void onResizeWindow() override;
 
 private:
     float _uiScale;

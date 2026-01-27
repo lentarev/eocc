@@ -29,6 +29,14 @@ static void mouseButtonCallback(GLFWwindow* window, int button, int action, int 
     }
 }
 
+static void framebufferSizeCallback(GLFWwindow* window, const int width, const int height) {
+    vecthar::Engine* engine = static_cast<vecthar::Engine*>(glfwGetWindowUserPointer(window));
+    if (engine) {
+        // engine->onMouseButton(button, action, xpos, ypos);
+        engine->onResizeWindow(width, height);
+    }
+}
+
 namespace vecthar {
 
 /// Constructor
@@ -56,6 +64,7 @@ Engine::Engine() {
     // Set callbacks
     glfwSetKeyCallback(_window->getGLFWWindow(), keyCallback);
     glfwSetMouseButtonCallback(_window->getGLFWWindow(), mouseButtonCallback);
+    glfwSetFramebufferSizeCallback(_window->getGLFWWindow(), framebufferSizeCallback);
 }
 
 /// Destructor
@@ -105,6 +114,18 @@ void Engine::setCurrentScene(std::unique_ptr<SceneBase> scene) {
     if (_currentScene) {
         _currentScene->setEngine(this);
         _currentScene->initialize();
+    }
+}
+
+/// @brief Handles framebuffer size event
+/// @param width
+/// @param height
+void Engine::onResizeWindow(const int width, const int height) {
+    // Update viewport
+    glViewport(0, 0, width, height);
+    if (_currentScene) {
+        std::cout << "width: " << width << " height: " << height << std::endl;
+        _currentScene->onResizeWindow();
     }
 }
 

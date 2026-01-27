@@ -47,6 +47,9 @@ public:
     /// @param mods
     virtual void onKey(int key, int scancode, int action, int mods) {}
 
+    /// @brief Handles resize window event
+    virtual void onResizeWindow() {}
+
 protected:
     Engine* _engine = nullptr;
 };

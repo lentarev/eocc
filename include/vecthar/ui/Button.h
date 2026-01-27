@@ -28,6 +28,10 @@ public:
     float getWidth() const;
     float getHeight() const;
 
+    // Setters
+    void setX(const float x);
+    void setY(const float y);
+
 private:
     float _x, _y, _width, _height;
     std::string _text;

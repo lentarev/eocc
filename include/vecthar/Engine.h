@@ -28,6 +28,11 @@ public:
     // Handle mouse click
     void onMouseButton(int button, int action, double xpos, double ypos);
 
+    /// @brief Handles framebuffer size event
+    /// @param width
+    /// @param height
+    void onResizeWindow(const int width, const int height);
+
     // Set current scene
     void setCurrentScene(std::unique_ptr<SceneBase> scene);
 

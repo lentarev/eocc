@@ -26,6 +26,7 @@ void Button::render(Renderer& renderer, float scale) const {
     renderer.drawText(_text, _x, _y, scale);
 }
 
+// Getters for debugging
 float Button::getX() const {
     return _x;
 }
@@ -40,6 +41,15 @@ float Button::getWidth() const {
 
 float Button::getHeight() const {
     return _height;
+}
+
+// Setters
+void Button::setX(const float x) {
+    _x = x;
+}
+
+void Button::setY(const float y) {
+    _y = y;
 }
 
 }  // namespace vecthar::ui
