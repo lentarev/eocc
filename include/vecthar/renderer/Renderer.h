@@ -11,6 +11,13 @@
 
 #include <vecthar/base/OpenGLTypes.h>
 
+// Forward declaration of classes
+namespace vecthar::ui {
+
+class TextRenderer;
+
+}
+
 namespace vecthar {
 
 // Forward declaration of classes
@@ -55,7 +62,7 @@ public:
     /// @param x
     /// @param y
     /// @param color
-    void drawText(const std::string& text, float x, float y, const glm::vec3& color = glm::vec3(1.0f));
+    void drawText(const std::string& text, float x, float y, float scale = 1.0f, const glm::vec3& color = {1.0f, 1.0f, 1.0f});
 
 private:
     GLuint _program = 0;
@@ -65,9 +72,10 @@ private:
 
     bool _frameBegun = false;
 
-    // 2D UI
-    GLuint _uiProgram = 0;
-    bool _uiInit = false;
+    // Text renderer
+    std::unique_ptr<vecthar::ui::TextRenderer> _textRenderer;
+
+    GLboolean _prevDepthTest, _prevCullFace, _prevBlend;
 };
 
 }  // namespace vecthar

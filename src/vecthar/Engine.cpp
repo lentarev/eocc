@@ -7,6 +7,7 @@
 #include <vecthar/system/window/Window.h>
 #include <vecthar/renderer/Renderer.h>
 #include <vecthar/camera/Camera.h>
+#include <vecthar/base/FPSCounter.h>
 
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -16,6 +17,23 @@ static void keyCallback(GLFWwindow* window, int key, int scancode, int action, i
     vecthar::Engine* engine = static_cast<vecthar::Engine*>(glfwGetWindowUserPointer(window));
     if (engine) {
         engine->onKey(key, scancode, action, mods);
+    }
+}
+
+static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+    double xpos, ypos;
+    glfwGetCursorPos(window, &xpos, &ypos);
+    vecthar::Engine* engine = static_cast<vecthar::Engine*>(glfwGetWindowUserPointer(window));
+    if (engine) {
+        engine->onMouseButton(button, action, xpos, ypos);
+    }
+}
+
+static void framebufferSizeCallback(GLFWwindow* window, const int width, const int height) {
+    vecthar::Engine* engine = static_cast<vecthar::Engine*>(glfwGetWindowUserPointer(window));
+    if (engine) {
+        // engine->onMouseButton(button, action, xpos, ypos);
+        engine->onResizeWindow(width, height);
     }
 }
 
@@ -31,14 +49,22 @@ Engine::Engine() {
     // 1. Window subsystem
     _window = std::make_unique<Window>(800, 600, "OpenGL Test Window");
 
+    std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
+    GLenum err = glGetError();
+    if (err != GL_NO_ERROR) {
+        std::cerr << "OpenGL error after Window init: " << err << "\n";
+    }
+
     // 2. Renderer subsystem
     _renderer = std::make_unique<Renderer>();
 
     // Passing a pointer to Engine to the GLFW window
     glfwSetWindowUserPointer(_window->getGLFWWindow(), this);
 
-    // Set callback
+    // Set callbacks
     glfwSetKeyCallback(_window->getGLFWWindow(), keyCallback);
+    glfwSetMouseButtonCallback(_window->getGLFWWindow(), mouseButtonCallback);
+    glfwSetFramebufferSizeCallback(_window->getGLFWWindow(), framebufferSizeCallback);
 }
 
 /// Destructor
@@ -57,6 +83,29 @@ void Engine::onKey(int key, int scancode, int action, int mods) {
     }
 }
 
+/// @brief Handles mouse events.
+/// @param button
+/// @param action
+/// @param xpos
+/// @param ypos
+void Engine::onMouseButton(int button, int action, double xpos, double ypos) {
+    _mouseX = xpos;
+    _mouseY = ypos;
+
+    // Преобразуем координаты мыши в framebuffer-пространство
+    int winW, winH, fbW, fbH;
+    glfwGetWindowSize(_window->getGLFWWindow(), &winW, &winH);
+    glfwGetFramebufferSize(_window->getGLFWWindow(), &fbW, &fbH);
+
+    float scaleX = static_cast<float>(fbW) / winW;
+    float scaleY = static_cast<float>(fbH) / winH;
+
+    _mouseX *= scaleX;
+    _mouseY *= scaleY;
+
+    _mousePressed = (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS);
+}
+
 /// @brief Set current scene
 /// @param scene
 void Engine::setCurrentScene(std::unique_ptr<SceneBase> scene) {
@@ -64,7 +113,38 @@ void Engine::setCurrentScene(std::unique_ptr<SceneBase> scene) {
 
     if (_currentScene) {
         _currentScene->setEngine(this);
+        _currentScene->initialize();
     }
+}
+
+/// @brief Handles framebuffer size event
+/// @param width
+/// @param height
+void Engine::onResizeWindow(const int width, const int height) {
+    // Update viewport
+    glViewport(0, 0, width, height);
+    if (_currentScene) {
+        std::cout << "width: " << width << " height: " << height << std::endl;
+        _currentScene->onResizeWindow();
+    }
+}
+
+bool Engine::isMousePressed() const {
+    return _mousePressed;
+}
+
+float Engine::getMouseX() const {
+    return static_cast<float>(_mouseX);
+}
+
+float Engine::getMouseY() const {
+    return static_cast<float>(_mouseY);
+}
+
+/// @brief return a reference to the window
+/// @return
+Window& Engine::getWindow() const {
+    return *_window;
 }
 
 /// Starting the main loop
@@ -72,6 +152,8 @@ void Engine::run() {
     double lastTime = glfwGetTime();
     double totalTime = 0.0;  // absolute time of logic
     double accumulator = 0.0;
+
+    FPSCounter fpsCounter;
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -96,6 +178,8 @@ void Engine::run() {
 
         float aspect = static_cast<float>(_window->getWidth()) / _window->getHeight();
 
+        // std::cout << "w: " << _window->getWidth() << " h: " << _window->getHeight() << std::endl;
+
         // --- Logic (fixed timestep) ---
         while (accumulator >= FIXED_DELTA_TIME) {
             if (_currentScene) {
@@ -111,6 +195,15 @@ void Engine::run() {
             _renderer->beginFrame(mainCamera, aspect);
             _currentScene->draw(*_renderer);
             _renderer->endFrame();
+        }
+
+        // --- Render UI ---
+        if (_currentScene) {
+            _renderer->beginUIFrame(_window->getWidth(), _window->getHeight());
+
+            fpsCounter.update();  // Updating FPS before rendering
+            _currentScene->drawUI(*_renderer, fpsCounter);
+            _renderer->endUIFrame();
         }
 
         // swap buffers

@@ -7,6 +7,7 @@
 #include <vecthar/renderer/Renderer.h>
 #include <vecthar/assets/shader/Shader.h>
 #include <vecthar/input/Key.h>
+#include <vecthar/base/FPSCounter.h>
 
 #include "scenes/menu/Menu.h"
 
@@ -22,7 +23,7 @@ Level1::Level1() {
 }
 
 // Destructor
-Level1::~Level1() {}
+Level1::~Level1() = default;
 
 /**
  * Input
@@ -54,4 +55,4 @@ void Level1::draw(vecthar::Renderer& renderer) {
 /**
  * Draw UI
  */
-void Level1::drawUI(vecthar::Renderer& renderer) {}
+void Level1::drawUI(vecthar::Renderer& renderer, const vecthar::FPSCounter& fps) {}

@@ -18,6 +18,7 @@ namespace vecthar {
 class Mesh;
 class Renderer;
 class Shader;
+class FPSCounter;
 
 }  // namespace vecthar
 
@@ -28,7 +29,7 @@ public:
 
     void update(float deltaTime, float totalTime) override;
     void draw(vecthar::Renderer& renderer) override;
-    void drawUI(vecthar::Renderer& renderer) override;
+    void drawUI(vecthar::Renderer& renderer, const vecthar::FPSCounter& fps) override;
     void onKey(int key, int scancode, int action, int mods) override;
 
 private:

@@ -28,6 +28,8 @@ public:
     // Returns the current window height (in pixels)
     int getHeight() const;
 
+    float getContentScale() const;
+
 private:
     GLFWwindow* _window = nullptr;
     GLFWwindow* getGLFWWindow() const { return _window; }

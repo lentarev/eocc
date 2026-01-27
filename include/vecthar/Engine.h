@@ -25,12 +25,32 @@ public:
     // Handles keyboard input (called via GLFW callback).
     void onKey(int key, int scancode, int action, int mods);
 
+    // Handle mouse click
+    void onMouseButton(int button, int action, double xpos, double ypos);
+
+    /// @brief Handles framebuffer size event
+    /// @param width
+    /// @param height
+    void onResizeWindow(const int width, const int height);
+
     // Set current scene
     void setCurrentScene(std::unique_ptr<SceneBase> scene);
+
+    bool isMousePressed() const;
+    float getMouseX() const;
+    float getMouseY() const;
+
+    /// @brief return a reference to the window
+    /// @return
+    Window& getWindow() const;
 
 private:
     const double TARGET_FPS = 60.0;
     const double FIXED_DELTA_TIME = 1.0 / TARGET_FPS;  // Fixed timestep: 60 updates/sec
+
+    // For mouse
+    double _mouseX = 0.0, _mouseY = 0.0;
+    bool _mousePressed = false;
 
     // Subsystems
 

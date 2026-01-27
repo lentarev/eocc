@@ -22,9 +22,3 @@ See: [`third_party/glad/LICENSE`](third_party/glad/LICENSE)
 Copyright (c) 2005-2024 G-Truc Creation  
 License: Happy Bunny License (Modified MIT)  
 See: [`third_party/glm/copying.txt`](third_party/glm/copying.txt)
-
-## font8x8
-- Source: https://github.com/dhepper/font8x8
-- Author: Daniel Hepper
-- License: Public Domain / MIT
-- Used for debug UI and FPS counter in Vecthar engine.

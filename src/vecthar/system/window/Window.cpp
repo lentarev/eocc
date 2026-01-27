@@ -79,4 +79,10 @@ int Window::getHeight() const {
     return h;
 }
 
+float Window::getContentScale() const {
+    float xscale, yscale;
+    glfwGetWindowContentScale(_window, &xscale, &yscale);
+    return (xscale + yscale) / 2.0f;
+}
+
 }  // namespace vecthar
