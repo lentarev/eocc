@@ -11,7 +11,7 @@ namespace vecthar::ui {
 /**
  * Constructor
  */
-Button::Button(float x, float y, float width, float height, const std::string& text) : _x(x), _y(y), _width(width), _height(height), _text(text) {};
+Button::Button() = default;
 
 /**
  * Destructor
@@ -26,7 +26,7 @@ void Button::render(Renderer& renderer, float scale) const {
     renderer.drawText(_text, _x, _y, scale);
 }
 
-// Getters for debugging
+// Getters
 float Button::getX() const {
     return _x;
 }
@@ -43,6 +43,10 @@ float Button::getHeight() const {
     return _height;
 }
 
+std::string Button::getLabel() const {
+    return _text;
+}
+
 // Setters
 void Button::setX(const float x) {
     _x = x;
@@ -50,6 +54,18 @@ void Button::setX(const float x) {
 
 void Button::setY(const float y) {
     _y = y;
+}
+
+void Button::setWidth(const float width) {
+    _width = width;
+}
+
+void Button::setHeight(const float height) {
+    _height = height;
+}
+
+void Button::setLabel(const std::string& text) {
+    _text = text;
 }
 
 }  // namespace vecthar::ui

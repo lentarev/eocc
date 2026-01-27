@@ -29,14 +29,30 @@ void Menu::initialize() {
 
     // _transform.position = glm::vec3(-2.0f, 0.0f, 0.0f);
 
+    _uiScale = getEngine()->getWindow().getContentScale();
+    _startButton = std::make_unique<vecthar::ui::Button>();
+
+    onResizeWindow();
+}
+
+/**
+ * Handles on resize window event
+ */
+void Menu::onResizeWindow() {
     int winW = getEngine()->getWindow().getWidth();
     int winH = getEngine()->getWindow().getHeight();
 
-    int w = (winW / 2) - (200 / 2);
-    int h = (winH / 2) - (40 / 2);
+    int logicalW = static_cast<int>(winW / _uiScale);  // 1600 / 2 = 800
+    int logicalH = static_cast<int>(winH / _uiScale);  // 1200 / 2 = 600
 
-    _uiScale = getEngine()->getWindow().getContentScale();
-    _startButton = std::make_unique<vecthar::ui::Button>(w * _uiScale, h * _uiScale, 200 * _uiScale, 40 * _uiScale, "Start Game");
+    int w = (logicalW / 2) - 100;  // 400 - 100 = 300
+    int h = (logicalH / 2) - 20;   // 300 - 20 = 280
+
+    _startButton->setLabel("Start Game");
+    _startButton->setX(w * _uiScale);
+    _startButton->setY(h * _uiScale);
+    _startButton->setWidth(200 * _uiScale);
+    _startButton->setHeight(40 * _uiScale);
 }
 
 /**
@@ -78,26 +94,12 @@ void Menu::draw(vecthar::Renderer& renderer) {
 }
 
 /**
- * Handles on resize window event
- */
-void Menu::onResizeWindow() {
-    int winW = getEngine()->getWindow().getWidth();
-    int winH = getEngine()->getWindow().getHeight();
-
-    int w = (winW / 2) - (200 / 2);
-    int h = (winH / 2) - (40 / 2);
-
-    _startButton->setX(w);
-    _startButton->setY(h);
-}
-
-/**
  * Draw UI
  */
 void Menu::drawUI(vecthar::Renderer& renderer, const vecthar::FPSCounter& fps) {
-    float UI_TEXT_SCALE = _uiScale * 1.0f / _uiScale;
+    float UI_TEXT_SCALE = _uiScale * 2.0f;
 
-    _startButton->render(renderer, 2.0f);
+    _startButton->render(renderer, UI_TEXT_SCALE);
 
     std::string text = "FPS: " + std::to_string(fps.getFPS());
     renderer.drawText(text, 10, 10, UI_TEXT_SCALE, {1.0f, 0.2f, 0.4f});
