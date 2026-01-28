@@ -20,6 +20,10 @@ public:
     // Indices
     GLsizei getIndexCount() const;
 
+    bool hasIndices() const;
+
+    size_t getVertexCount() const;
+
     // Return VAO
     GLuint getVAO() const;
 
@@ -31,6 +35,10 @@ private:
     GLuint _tbo = 0;
 
     std::vector<unsigned int> _indices;
+
+    size_t _vertexCount = 0;
+
+    bool _hasIndices = false;
 
     void uploadToGPU(const MeshData& data);
 };

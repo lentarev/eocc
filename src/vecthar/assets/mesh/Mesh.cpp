@@ -9,7 +9,7 @@
 
 namespace vecthar {
 
-Mesh::Mesh(const MeshData& data) : _indices(data.indices) {
+Mesh::Mesh(const MeshData& data) : _indices(data.indices), _vertexCount(data.positions.size() / 3), _hasIndices(!data.indices.empty()) {
     uploadToGPU(data);
 }
 
@@ -43,19 +43,20 @@ Mesh::~Mesh() {
 }
 
 void Mesh::uploadToGPU(const MeshData& data) {
-    const size_t vertexByteSize = data.positions.empty() ? 0 : data.positions.size() * sizeof(data.positions[0]);
-    const GLsizei indicesByteSize = data.indices.empty() ? 0 : data.indices.size() * sizeof(data.indices[0]);
-
     // Generate VAO
     glGenVertexArrays(1, &_vao);
     glBindVertexArray(_vao);
 
     // Vertex (location = 0)
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, vertexByteSize, data.positions.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    if (!data.positions.empty()) {
+        const size_t positionsByteSize = data.positions.size() * sizeof(data.positions[0]);
+
+        glGenBuffers(1, &_vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glBufferData(GL_ARRAY_BUFFER, positionsByteSize, data.positions.data(), GL_STATIC_DRAW);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+    }
 
     // Textute (location = 1)
     if (!data.texCoords.empty()) {
@@ -68,7 +69,7 @@ void Mesh::uploadToGPU(const MeshData& data) {
         glEnableVertexAttribArray(1);
     }
 
-    // Нормали (location = 2)
+    // Normals (location = 2)
     if (!data.normals.empty()) {
         const size_t normalsByteSize = data.normals.size() * sizeof(data.normals[0]);
 
@@ -79,10 +80,14 @@ void Mesh::uploadToGPU(const MeshData& data) {
         glEnableVertexAttribArray(2);
     }
 
-    // Indices
-    glGenBuffers(1, &_ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesByteSize, data.indices.data(), GL_STATIC_DRAW);
+    // Index buffer (EBO)
+    if (_hasIndices) {
+        const GLsizei indicesByteSize = data.indices.size() * sizeof(data.indices[0]);
+
+        glGenBuffers(1, &_ebo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesByteSize, data.indices.data(), GL_STATIC_DRAW);
+    }
 
     glBindVertexArray(0);
 }
@@ -97,6 +102,15 @@ GLuint Mesh::getVAO() const {
 // Returns the number of indices
 GLsizei Mesh::getIndexCount() const {
     return _indices.size();
+}
+
+bool Mesh::hasIndices() const {
+    return _hasIndices;
+}
+
+// Returns the number of vertices
+size_t Mesh::getVertexCount() const {
+    return _vertexCount;
 }
 
 }  // namespace vecthar
