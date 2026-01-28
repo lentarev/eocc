@@ -83,6 +83,7 @@ target_include_directories(vecthar_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw-3.4/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glm
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/SOIL2/src
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/cgltf-1.15
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
