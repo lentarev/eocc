@@ -70,7 +70,13 @@ void Renderer::drawMesh(const Mesh& mesh, const Material& material, const glm::m
 
     // Draw
     glBindVertexArray(mesh.getVAO());
-    glDrawElements(GL_TRIANGLES, mesh.getIndexCount(), GL_UNSIGNED_INT, 0);
+
+    if (mesh.hasIndices()) {
+        glDrawElements(GL_TRIANGLES, mesh.getIndexCount(), GL_UNSIGNED_INT, 0);
+    } else {
+        glDrawArrays(GL_TRIANGLES, 0, mesh.getVertexCount());
+    }
+
     glBindVertexArray(0);
 }
 

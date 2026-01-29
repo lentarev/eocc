@@ -22,3 +22,8 @@ See: [`third_party/glad/LICENSE`](third_party/glad/LICENSE)
 Copyright (c) 2005-2024 G-Truc Creation  
 License: Happy Bunny License (Modified MIT)  
 See: [`third_party/glm/copying.txt`](third_party/glm/copying.txt)
+
+## CGLTF
+Copyright (c) 2018-2021 Johannes Kuhlmann
+License: MIT  
+See: [`third_party/cgltf-1.15/LICENSE`](third_party/cgltf-1.15/LICENSE)
