@@ -160,7 +160,6 @@ target_include_directories(vecthar_demo PRIVATE
 # ===============================
 # КОПИРОВАНИЕ ДЕМО-ШЕЙДЕРОВ
 # ===============================
-
 set(DEMO_SHADER_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/demo/shaders")
 set(DEMO_SHADER_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/shaders")
 
@@ -177,6 +176,28 @@ add_custom_target(demo-copy-shaders ALL
 )
 
 add_dependencies(vecthar_demo demo-copy-shaders)
+
+
+
+# ===============================
+# КОПИРОВАНИЕ ДЕМО-АССЕТЫ
+# ===============================
+set(DEMO_ASSETS_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/demo/assets")
+set(DEMO_ASSETS_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/assets")
+
+add_custom_command(
+    OUTPUT ${DEMO_ASSETS_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO_ASSETS_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different ${DEMO_ASSETS_SOURCE_DIR} ${DEMO_ASSETS_DEST_DIR}
+    COMMENT "Copying demo assets to ${DEMO_ASSETS_DEST_DIR}"
+    VERBATIM
+)
+
+add_custom_target(demo-copy-assets ALL
+    DEPENDS ${DEMO_ASSETS_DEST_DIR}
+)
+
+add_dependencies(vecthar_demo demo-copy-assets)
 
 # Применяем C++20
 target_compile_features(vecthar_engine PUBLIC cxx_std_20)

@@ -9,6 +9,7 @@
 #include <vecthar/base/FPSCounter.h>
 #include <vecthar/ui/Button.h>
 #include <vecthar/system/window/Window.h>
+#include <vecthar/assets/model/ModelLoader.h>
 
 #include <iostream>
 
@@ -22,12 +23,17 @@ void Menu::initialize() {
     _shader = std::make_unique<vecthar::Shader>();
     _shader->createProgram(_shader->read("./shaders/basic.vert"), _shader->read("./shaders/basic.frag"));
 
-    vecthar::MeshData cubeData = vecthar::Primitive::createCube();
-
-    _cubeMesh = std::make_unique<vecthar::Mesh>(cubeData);
-    _cubeMaterial.baseColor = {1.0f, 0.0f, 0.0f};
-
+    // vecthar::MeshData cubeData = vecthar::Primitive::createCube();
+    // _cubeMesh = std::make_unique<vecthar::Mesh>(cubeData);
+    // _cubeMaterial.baseColor = {1.0f, 0.0f, 0.0f};
     // _transform.position = glm::vec3(-2.0f, 0.0f, 0.0f);
+
+    auto tower = vecthar::ModelLoader::loadFromFile("./assets/models/tower.glb");
+    _towerMesh = std::make_unique<vecthar::Mesh>(tower.meshes[0]);
+
+    _cubeMaterial.baseColor = {0.3f, 0.0f, 0.0f};
+    _transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
+    _transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
 
     _uiScale = getEngine()->getWindow().getContentScale();
     _startButton = std::make_unique<vecthar::ui::Button>();
@@ -88,9 +94,10 @@ void Menu::update(float deltaTime, float totalTime) {
  * Draw 3D
  */
 void Menu::draw(vecthar::Renderer& renderer) {
-    // renderer.useShaderProgram(_shader->getProgram());
+    renderer.useShaderProgram(_shader->getProgram());
     // Drawing a cube using a renderer
     // renderer.drawMesh(*_cubeMesh, _cubeMaterial, _transform.getModelMatrix());
+    renderer.drawMesh(*_towerMesh, _cubeMaterial, _transform.getModelMatrix());
 }
 
 /**
