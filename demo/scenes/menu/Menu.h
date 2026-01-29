@@ -43,6 +43,7 @@ public:
 private:
     float _uiScale;
 
+    std::unique_ptr<vecthar::Mesh> _towerMesh;
     std::unique_ptr<vecthar::Mesh> _cubeMesh;
     std::unique_ptr<vecthar::Shader> _shader;
     vecthar::Material _cubeMaterial;
