@@ -99,16 +99,12 @@ target_link_libraries(vecthar_engine PRIVATE glfw OpenGL::GL soil2)
 set(SYS_SHADER_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/sys_shaders")
 set(SYS_SHADER_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/sys_shaders")
 
-add_custom_command(
-    OUTPUT ${SYS_SHADER_DEST_DIR}
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${SYS_SHADER_DEST_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different ${SYS_SHADER_SOURCE_DIR} ${SYS_SHADER_DEST_DIR}
-    COMMENT "Copying Vecthar system shaders to ${SYS_SHADER_DEST_DIR}"
-    VERBATIM
-)
-
 add_custom_target(vecthar-copy-sys-shaders ALL
-    DEPENDS ${SYS_SHADER_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
+        ${CMAKE_CURRENT_SOURCE_DIR}/sys_shaders
+        ${CMAKE_CURRENT_BINARY_DIR}/sys_shaders
+    COMMENT "Copying Vecthar system shaders"
+    VERBATIM
 )
 
 add_dependencies(vecthar_engine vecthar-copy-sys-shaders)
@@ -120,16 +116,12 @@ add_dependencies(vecthar_engine vecthar-copy-sys-shaders)
 set(SYS_ASSETS_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/sys_assets")
 set(SYS_ASSETS_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/sys_assets")
 
-add_custom_command(
-    OUTPUT ${SYS_ASSETS_DEST_DIR}
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${SYS_ASSETS_DEST_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different ${SYS_ASSETS_SOURCE_DIR} ${SYS_ASSETS_DEST_DIR}
-    COMMENT "Copying Vecthar system shaders to ${SYS_ASSETS_DEST_DIR}"
-    VERBATIM
-)
-
 add_custom_target(vecthar-copy-sys-assets ALL
-    DEPENDS ${SYS_ASSETS_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
+        ${CMAKE_CURRENT_SOURCE_DIR}/sys_assets
+        ${CMAKE_CURRENT_BINARY_DIR}/sys_assets
+    COMMENT "Copying Vecthar system assets"
+    VERBATIM
 )
 
 add_dependencies(vecthar_engine vecthar-copy-sys-assets)
@@ -158,43 +150,17 @@ target_include_directories(vecthar_demo PRIVATE
 )
 
 # ===============================
-# КОПИРОВАНИЕ ДЕМО-ШЕЙДЕРОВ
-# ===============================
-set(DEMO_SHADER_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/demo/shaders")
-set(DEMO_SHADER_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/shaders")
-
-add_custom_command(
-    OUTPUT ${DEMO_SHADER_DEST_DIR}
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO_SHADER_DEST_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different ${DEMO_SHADER_SOURCE_DIR} ${DEMO_SHADER_DEST_DIR}
-    COMMENT "Copying demo shaders to ${DEMO_SHADER_DEST_DIR}"
-    VERBATIM
-)
-
-add_custom_target(demo-copy-shaders ALL
-    DEPENDS ${DEMO_SHADER_DEST_DIR}
-)
-
-add_dependencies(vecthar_demo demo-copy-shaders)
-
-
-
-# ===============================
 # КОПИРОВАНИЕ ДЕМО-АССЕТЫ
 # ===============================
 set(DEMO_ASSETS_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/demo/assets")
 set(DEMO_ASSETS_DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/assets")
 
-add_custom_command(
-    OUTPUT ${DEMO_ASSETS_DEST_DIR}
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${DEMO_ASSETS_DEST_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different ${DEMO_ASSETS_SOURCE_DIR} ${DEMO_ASSETS_DEST_DIR}
-    COMMENT "Copying demo assets to ${DEMO_ASSETS_DEST_DIR}"
-    VERBATIM
-)
-
 add_custom_target(demo-copy-assets ALL
-    DEPENDS ${DEMO_ASSETS_DEST_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
+        ${CMAKE_CURRENT_SOURCE_DIR}/demo/assets
+        ${CMAKE_CURRENT_BINARY_DIR}/assets
+    COMMENT "Copying demo assets"
+    VERBATIM
 )
 
 add_dependencies(vecthar_demo demo-copy-assets)

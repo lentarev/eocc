@@ -14,7 +14,7 @@
 // Constructor
 Level1::Level1() {
     _shader = std::make_unique<vecthar::Shader>();
-    _shader->createProgram(_shader->read("./shaders/basic.vert"), _shader->read("./shaders/basic.frag"));
+    _shader->createProgram(_shader->read("./assets/shaders/basic.vert"), _shader->read("./assets/shaders/basic.frag"));
 
     vecthar::MeshData cubeData = vecthar::Primitive::createCube();
 
