@@ -65,9 +65,11 @@ void Menu::onResizeWindow() {
  * Input
  */
 void Menu::onKey(int key, int scancode, int action, int mods) {
-    if (key == vecthar::KEY_SPACE && action == 1) {
-        // Transition to another scene
-        this->getEngine()->setCurrentScene(std::make_unique<Level1>());
+    std::cout << "key: " << key << std::endl;
+
+    if (key == vecthar::KEY_ESCAPE && action == 1) {
+        // Request to close the application.
+        this->getEngine()->requestClose();
     }
 }
 

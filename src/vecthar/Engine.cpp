@@ -75,7 +75,7 @@ Engine::~Engine() {
 
 /// Handles keyboard input events.
 void Engine::onKey(int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+    if (action == GLFW_PRESS) {
         if (_currentScene) {
             // Call the onKey method from the scene
             _currentScene->onKey(key, scancode, action, mods);
@@ -146,7 +146,12 @@ Window& Engine::getWindow() const {
     return *_window;
 }
 
-/// Starting the main loop
+/// @brief Request to close the application.
+void Engine::requestClose() {
+    glfwSetWindowShouldClose(_window->getGLFWWindow(), GLFW_TRUE);
+}
+
+/// @brief Starting the main loop
 void Engine::run() {
     double lastTime = glfwGetTime();
     double totalTime = 0.0;  // absolute time of logic
