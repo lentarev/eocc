@@ -4,7 +4,7 @@
 
 #include "scenes/level2/Level2.h"
 #include <vecthar/Engine.h>
-#include <vecthar/assets/mesh/Mesh.h>
+#include <vecthar/assets/model/structures/Model.h>
 #include <vecthar/renderer/Renderer.h>
 #include <vecthar/assets/shader/Shader.h>
 #include <vecthar/input/Key.h>
@@ -23,7 +23,7 @@ void Level2::initialize() {
     _shader->createProgram(_shader->read("./assets/shaders/basic.vert"), _shader->read("./assets/shaders/basic.frag"));
 
     auto tower = vecthar::ModelLoader::loadFromFile("./assets/models/tower.glb");
-    _towerMesh = std::make_unique<vecthar::Mesh>(tower.meshes[0]);
+    _towerModel = std::make_unique<vecthar::Model>(std::move(tower));
 
     _towerMaterial.baseColor = {0.3f, 0.0f, 0.0f, 1.0f};
     _transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -56,7 +56,10 @@ void Level2::update(float deltaTime, float totalTime) {
  */
 void Level2::draw(vecthar::Renderer& renderer) {
     renderer.useShaderProgram(_shader->getProgram());
-    renderer.drawMesh(*_towerMesh, _towerMaterial, _transform.getModelMatrix());
+
+    for (const auto& mesh : _towerModel->meshes) {
+        renderer.drawMesh(*mesh, mesh->getMaterial(), _transform.getModelMatrix());
+    }
 }
 
 /**

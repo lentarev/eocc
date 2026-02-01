@@ -15,7 +15,7 @@
 // Forward declaration of classes
 namespace vecthar {
 
-class Mesh;
+class Model;
 class Renderer;
 class Shader;
 class FPSCounter;
@@ -37,7 +37,7 @@ public:
 private:
     float _uiScale;
 
-    std::unique_ptr<vecthar::Mesh> _towerMesh;
+    std::unique_ptr<vecthar::Model> _towerModel;
     std::unique_ptr<vecthar::Shader> _shader;
     vecthar::Material _towerMaterial;
     vecthar::Transform _transform;
