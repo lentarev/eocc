@@ -9,7 +9,8 @@
 
 namespace vecthar {
 
-Mesh::Mesh(const MeshData& data) : _indices(data.indices), _vertexCount(data.positions.size() / 3), _hasIndices(!data.indices.empty()) {
+Mesh::Mesh(const MeshData& data)
+    : _indices(data.indices), _vertexCount(data.positions.size() / 3), _hasIndices(!data.indices.empty()), _material(data.material) {
     uploadToGPU(data);
 }
 
@@ -111,6 +112,11 @@ bool Mesh::hasIndices() const {
 // Returns the number of vertices
 size_t Mesh::getVertexCount() const {
     return _vertexCount;
+}
+
+// Return material
+Material Mesh::getMaterial() const {
+    return _material;
 }
 
 }  // namespace vecthar

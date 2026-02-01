@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <vecthar/assets/mesh/structures/MeshData.h>
-
+#include <vecthar/assets/material/Material.h>
 #include <vecthar/base/OpenGLTypes.h>
 
 namespace vecthar {
@@ -27,12 +27,17 @@ public:
     // Return VAO
     GLuint getVAO() const;
 
+    // Return material
+    Material getMaterial() const;
+
 private:
     GLuint _vao = 0;
     GLuint _vbo = 0;
     GLuint _ebo = 0;
     GLuint _nbo = 0;
     GLuint _tbo = 0;
+
+    Material _material;
 
     std::vector<unsigned int> _indices;
 

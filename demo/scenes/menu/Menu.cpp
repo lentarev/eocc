@@ -14,29 +14,18 @@
 #include <iostream>
 
 #include "scenes/level1/Level1.h"
+#include "scenes/level2/Level2.h"
 
 Menu::Menu() {}
 
 Menu::~Menu() = default;
 
 void Menu::initialize() {
-    _shader = std::make_unique<vecthar::Shader>();
-    _shader->createProgram(_shader->read("./assets/shaders/basic.vert"), _shader->read("./assets/shaders/basic.frag"));
-
-    // vecthar::MeshData cubeData = vecthar::Primitive::createCube();
-    // _cubeMesh = std::make_unique<vecthar::Mesh>(cubeData);
-    // _cubeMaterial.baseColor = {1.0f, 0.0f, 0.0f};
-    // _transform.position = glm::vec3(-2.0f, 0.0f, 0.0f);
-
-    auto tower = vecthar::ModelLoader::loadFromFile("./assets/models/tower.glb");
-    _towerMesh = std::make_unique<vecthar::Mesh>(tower.meshes[0]);
-
-    _cubeMaterial.baseColor = {0.3f, 0.0f, 0.0f};
-    _transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
-    _transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
-
     _uiScale = getEngine()->getWindow().getContentScale();
-    _startButton = std::make_unique<vecthar::ui::Button>();
+
+    // Define buttons
+    _startLevel1Button = std::make_unique<vecthar::ui::Button>();
+    _startLevel2Button = std::make_unique<vecthar::ui::Button>();
 
     onResizeWindow();
 }
@@ -54,11 +43,19 @@ void Menu::onResizeWindow() {
     int w = (logicalW / 2) - 100;  // 400 - 100 = 300
     int h = (logicalH / 2) - 20;   // 300 - 20 = 280
 
-    _startButton->setLabel("Start Game");
-    _startButton->setX(w * _uiScale);
-    _startButton->setY(h * _uiScale);
-    _startButton->setWidth(200 * _uiScale);
-    _startButton->setHeight(40 * _uiScale);
+    // Button - Start Level 1
+    _startLevel1Button->setLabel("Start Level 1");
+    _startLevel1Button->setX(w * _uiScale);
+    _startLevel1Button->setY(h * _uiScale);
+    _startLevel1Button->setWidth(200 * _uiScale);
+    _startLevel1Button->setHeight(40 * _uiScale);
+
+    // Button - Start Level 2
+    _startLevel2Button->setLabel("Start Level 2");
+    _startLevel2Button->setX(w * _uiScale);
+    _startLevel2Button->setY((h + 50) * _uiScale);
+    _startLevel2Button->setWidth(200 * _uiScale);
+    _startLevel2Button->setHeight(40 * _uiScale);
 }
 
 /**
@@ -77,17 +74,20 @@ void Menu::onKey(int key, int scancode, int action, int mods) {
  * Update - logic update
  */
 void Menu::update(float deltaTime, float totalTime) {
-    _transform.rotation.y = glm::radians(45.0f) * totalTime;
-
     vecthar::Engine* engine = this->getEngine();
 
     if (engine->isMousePressed()) {
         float mx = engine->getMouseX();
         float my = engine->getMouseY();
 
-        if (_startButton->contains(mx, my)) {
+        if (_startLevel1Button->contains(mx, my)) {
             // Transition to another scene
             engine->setCurrentScene(std::make_unique<Level1>());
+        }
+
+        if (_startLevel2Button->contains(mx, my)) {
+            // Transition to another scene
+            engine->setCurrentScene(std::make_unique<Level2>());
         }
     }
 }
@@ -95,12 +95,7 @@ void Menu::update(float deltaTime, float totalTime) {
 /**
  * Draw 3D
  */
-void Menu::draw(vecthar::Renderer& renderer) {
-    renderer.useShaderProgram(_shader->getProgram());
-    // Drawing a cube using a renderer
-    // renderer.drawMesh(*_cubeMesh, _cubeMaterial, _transform.getModelMatrix());
-    renderer.drawMesh(*_towerMesh, _cubeMaterial, _transform.getModelMatrix());
-}
+void Menu::draw(vecthar::Renderer& renderer) {}
 
 /**
  * Draw UI
@@ -108,7 +103,8 @@ void Menu::draw(vecthar::Renderer& renderer) {
 void Menu::drawUI(vecthar::Renderer& renderer, const vecthar::FPSCounter& fps) {
     float UI_TEXT_SCALE = _uiScale * 2.0f;
 
-    _startButton->render(renderer, UI_TEXT_SCALE);
+    _startLevel1Button->render(renderer, UI_TEXT_SCALE);
+    _startLevel2Button->render(renderer, UI_TEXT_SCALE);
 
     std::string text = "FPS: " + std::to_string(fps.getFPS());
     renderer.drawText(text, 10, 10, UI_TEXT_SCALE, {1.0f, 0.2f, 0.4f});

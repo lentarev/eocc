@@ -18,6 +18,9 @@ Window::Window(const int width, const int height, const char* title) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    // glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);  // remove the frame
 
     int framebufferWidth;
     int framebufferHeight;
@@ -59,13 +62,6 @@ Window::~Window() {
     Logger::log(1, "%s: Terminating Window\n", __FUNCTION__);
     glfwDestroyWindow(_window);
 }
-
-/**
- * Returns a pointer to GLFWwindow
- */
-// GLFWwindow* Window::getGLFWWindow() const {
-//     return _window;
-// }
 
 int Window::getWidth() const {
     int w, h;

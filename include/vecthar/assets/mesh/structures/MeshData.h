@@ -6,6 +6,7 @@
 #define VECTHAR_MESH_DATA_H
 
 #include <vector>
+#include <vecthar/assets/material/Material.h>
 
 namespace vecthar {
 
@@ -14,6 +15,8 @@ struct MeshData {
     std::vector<float> normals;         // x, y, z, ... (optional)
     std::vector<float> texCoords;       // u, v, ... (optional)
     std::vector<unsigned int> indices;  // triangles
+
+    Material material;
 };
 
 }  // namespace vecthar

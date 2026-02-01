@@ -27,12 +27,16 @@ public:
     Level1();
     ~Level1();
 
+    void initialize() override;
+
     void update(float deltaTime, float totalTime) override;
     void draw(vecthar::Renderer& renderer) override;
     void drawUI(vecthar::Renderer& renderer, const vecthar::FPSCounter& fps) override;
     void onKey(int key, int scancode, int action, int mods) override;
 
 private:
+    float _uiScale;
+
     std::unique_ptr<vecthar::Mesh> _cubeMesh;
     std::unique_ptr<vecthar::Shader> _shader;
     vecthar::Material _cubeMaterial;

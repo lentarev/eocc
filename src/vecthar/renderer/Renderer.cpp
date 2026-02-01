@@ -64,9 +64,9 @@ void Renderer::drawMesh(const Mesh& mesh, const Material& material, const glm::m
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &_viewMatrix[0][0]);
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, &_projectionMatrix[0][0]);
 
-    // Material: color
+    // Material: base color (RGBA)
     GLuint colorLoc = glGetUniformLocation(_program, "u_BaseColor");
-    glUniform3fv(colorLoc, 1, &material.baseColor[0]);
+    glUniform4f(colorLoc, material.baseColor.r, material.baseColor.g, material.baseColor.b, material.baseColor.a);
 
     // Draw
     glBindVertexArray(mesh.getVAO());

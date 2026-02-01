@@ -55,6 +55,8 @@ private:
     double _mouseX = 0.0, _mouseY = 0.0;
     bool _mousePressed = false;
 
+    std::unique_ptr<SceneBase> _pendingScene;
+
     // Subsystems
 
     std::unique_ptr<Window> _window;  ///< Manages the application window and input.

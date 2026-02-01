@@ -5,13 +5,14 @@
 #ifndef VECTHAR_MODEL_H
 #define VECTHAR_MODEL_H
 
+#include <memory>
 #include <vector>
-#include <vecthar/assets/mesh/structures/MeshData.h>
+#include <vecthar/assets/mesh/Mesh.h>
 
 namespace vecthar {
 
 struct Model {
-    std::vector<MeshData> meshes;
+    std::vector<std::unique_ptr<Mesh>> meshes;
 };
 
 }  // namespace vecthar

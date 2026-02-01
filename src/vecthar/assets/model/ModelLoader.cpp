@@ -6,8 +6,10 @@
 #include <cgltf.h>
 
 #include <vecthar/assets/model/ModelLoader.h>
+#include <vecthar/assets/mesh/structures/MeshData.h>  // убедись, что подключено
 #include <stdexcept>
 #include <cstring>
+#include <glm/vec4.hpp>
 
 namespace vecthar {
 
@@ -28,21 +30,20 @@ Model ModelLoader::loadFromFile(const std::string& filePath) {
 
     Model model;
 
-    // Проходим по всем мешам
+    // Проходим по всем мешам (логическим объектам)
     for (size_t i = 0; i < data->meshes_count; ++i) {
         const cgltf_mesh& mesh = data->meshes[i];
-        MeshData meshData;
 
-        size_t vertex_offset = 0;  // смещение для индексов
-
-        // Обрабатываем каждый примитив
+        // Обрабатываем каждый примитив ОТДЕЛЬНО
         for (size_t p = 0; p < mesh.primitives_count; ++p) {
             const cgltf_primitive& prim = mesh.primitives[p];
 
-            // Пропускаем не-треугольники
             if (prim.type != cgltf_primitive_type_triangles) {
                 continue;
             }
+
+            // --- Создаём MeshData ДЛЯ ОДНОГО ПРИМИТИВА ---
+            MeshData meshData;
 
             // --- Находим атрибуты ---
             const cgltf_attribute* pos_attr = nullptr;
@@ -61,40 +62,36 @@ Model ModelLoader::loadFromFile(const std::string& filePath) {
             }
 
             // --- Загружаем позиции ---
-            std::vector<float> positions;
             if (pos_attr) {
                 const float* src = (const float*)pos_attr->data->buffer_view->buffer->data;
                 size_t count = pos_attr->data->count;
                 size_t offset = pos_attr->data->buffer_view->offset + pos_attr->data->offset;
                 src = (const float*)((const char*)src + offset);
-                positions.assign(src, src + count * 3);
+                meshData.positions.assign(src, src + count * 3);
             }
 
             // --- Загружаем нормали ---
-            std::vector<float> normals;
             if (nrm_attr) {
                 const float* src = (const float*)nrm_attr->data->buffer_view->buffer->data;
                 size_t count = nrm_attr->data->count;
                 size_t offset = nrm_attr->data->buffer_view->offset + nrm_attr->data->offset;
                 src = (const float*)((const char*)src + offset);
-                normals.assign(src, src + count * 3);
+                meshData.normals.assign(src, src + count * 3);
             }
 
             // --- Загружаем UV ---
-            std::vector<float> texCoords;
             if (uv_attr) {
                 const float* src = (const float*)uv_attr->data->buffer_view->buffer->data;
                 size_t count = uv_attr->data->count;
                 size_t offset = uv_attr->data->buffer_view->offset + uv_attr->data->offset;
                 src = (const float*)((const char*)src + offset);
-                texCoords.assign(src, src + count * 2);
+                meshData.texCoords.assign(src, src + count * 2);
             }
 
             // --- Загружаем индексы ---
-            std::vector<unsigned int> indices;
             if (prim.indices) {
                 size_t index_count = prim.indices->count;
-                indices.resize(index_count);
+                meshData.indices.resize(index_count);
 
                 const void* src = prim.indices->buffer_view->buffer->data;
                 size_t offset = prim.indices->buffer_view->offset + prim.indices->offset;
@@ -103,32 +100,36 @@ Model ModelLoader::loadFromFile(const std::string& filePath) {
                 if (prim.indices->component_type == cgltf_component_type_r_16u) {
                     const uint16_t* src16 = (const uint16_t*)src;
                     for (size_t i = 0; i < index_count; ++i) {
-                        indices[i] = static_cast<unsigned int>(src16[i]) + static_cast<unsigned int>(vertex_offset);
+                        meshData.indices[i] = static_cast<unsigned int>(src16[i]);
                     }
                 } else if (prim.indices->component_type == cgltf_component_type_r_32u) {
                     const uint32_t* src32 = (const uint32_t*)src;
                     for (size_t i = 0; i < index_count; ++i) {
-                        indices[i] = src32[i] + static_cast<unsigned int>(vertex_offset);
+                        meshData.indices[i] = src32[i];
                     }
                 } else {
                     const uint8_t* src8 = (const uint8_t*)src;
                     for (size_t i = 0; i < index_count; ++i) {
-                        indices[i] = static_cast<unsigned int>(src8[i]) + static_cast<unsigned int>(vertex_offset);
+                        meshData.indices[i] = static_cast<unsigned int>(src8[i]);
                     }
                 }
             }
 
-            // --- Объединяем данные ---
-            meshData.positions.insert(meshData.positions.end(), positions.begin(), positions.end());
-            meshData.normals.insert(meshData.normals.end(), normals.begin(), normals.end());
-            meshData.texCoords.insert(meshData.texCoords.end(), texCoords.begin(), texCoords.end());
-            meshData.indices.insert(meshData.indices.end(), indices.begin(), indices.end());
+            // --- Читаем материал примитива ---
+            if (prim.material) {
+                const cgltf_material& mat = *prim.material;
+                if (mat.has_pbr_metallic_roughness) {
+                    const cgltf_pbr_metallic_roughness& pbr = mat.pbr_metallic_roughness;
+                    meshData.material.baseColor =
+                        glm::vec4(pbr.base_color_factor[0], pbr.base_color_factor[1], pbr.base_color_factor[2], pbr.base_color_factor[3]);
+                    // Позже добавишь текстуры
+                }
+            }
+            // Если материала нет — material остаётся белым по умолчанию
 
-            // Обновляем смещение для следующего примитива
-            vertex_offset += positions.size() / 3;
+            // --- Создаём Mesh и добавляем в модель ---
+            model.meshes.push_back(std::make_unique<Mesh>(meshData));
         }
-
-        model.meshes.push_back(std::move(meshData));
     }
 
     cgltf_free(data);
