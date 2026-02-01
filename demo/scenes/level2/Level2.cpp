@@ -25,7 +25,7 @@ void Level2::initialize() {
     auto tower = vecthar::ModelLoader::loadFromFile("./assets/models/tower.glb");
     _towerMesh = std::make_unique<vecthar::Mesh>(tower.meshes[0]);
 
-    _towerMaterial.baseColor = {0.3f, 0.0f, 0.0f};
+    _towerMaterial.baseColor = {0.3f, 0.0f, 0.0f, 1.0f};
     _transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
     _transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
 

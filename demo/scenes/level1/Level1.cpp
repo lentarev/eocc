@@ -28,7 +28,7 @@ void Level1::initialize() {
     vecthar::MeshData cubeData = vecthar::Primitive::createCube();
 
     _cubeMesh = std::make_unique<vecthar::Mesh>(cubeData);
-    _cubeMaterial.baseColor = {1.0f, 1.0f, 0.0f};
+    _cubeMaterial.baseColor = {1.0f, 1.0f, 0.0f, 1.0f};
 
     _uiScale = getEngine()->getWindow().getContentScale();
 }
