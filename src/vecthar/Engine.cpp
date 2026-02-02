@@ -160,7 +160,7 @@ void Engine::run() {
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);  // Wireframe for testing
 
     Camera mainCamera;
-    mainCamera.setPosition({0.0f, 0.0f, 5.0f});
+    mainCamera.setPosition({0.0f, 4.0f, 8.0f});
 
     // LOOP
     while (!glfwWindowShouldClose(_window->getGLFWWindow())) {
