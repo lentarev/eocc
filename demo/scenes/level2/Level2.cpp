@@ -18,7 +18,7 @@ Level2::Level2() = default;
 
 Level2::~Level2() = default;
 
-void Level2::initialize() {
+void Level2::initialize(vecthar::Renderer& renderer) {
     _shader = std::make_unique<vecthar::Shader>();
     _shader->createProgram(_shader->read("./assets/shaders/basic.vert"), _shader->read("./assets/shaders/basic.frag"));
 
@@ -29,6 +29,8 @@ void Level2::initialize() {
     _transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
 
     _uiScale = getEngine()->getWindow().getContentScale();
+
+    renderer.setDirectionalLight({.direction = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f)), .color = glm::vec3(1.0f, 0.95f, 0.8f), .intensity = 1.2f});
 }
 
 /**

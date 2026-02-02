@@ -27,7 +27,7 @@ public:
     Level2();
     ~Level2();
 
-    void initialize() override;
+    void initialize(vecthar::Renderer& renderer) override;
 
     void update(float deltaTime, float totalTime) override;
     void draw(vecthar::Renderer& renderer) override;

@@ -8,7 +8,7 @@
 #include <memory>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vecthar/assets/material/Material.h>
-
+#include <vecthar/lighting/DirectionalLight.h>
 #include <vecthar/base/OpenGLTypes.h>
 
 // Forward declaration of classes
@@ -64,6 +64,14 @@ public:
     /// @param color
     void drawText(const std::string& text, float x, float y, float scale = 1.0f, const glm::vec3& color = {1.0f, 1.0f, 1.0f});
 
+    /// @brief Set directional light
+    /// @param light
+    void setDirectionalLight(const DirectionalLight& light);
+
+    /// @brief Get directional light
+    /// @return
+    const DirectionalLight& getDirectionalLight() const;
+
 private:
     GLuint _program = 0;
 
@@ -76,6 +84,9 @@ private:
     std::unique_ptr<vecthar::ui::TextRenderer> _textRenderer;
 
     GLboolean _prevDepthTest, _prevCullFace, _prevBlend;
+
+    // Directional light
+    DirectionalLight _directionalLight;
 };
 
 }  // namespace vecthar

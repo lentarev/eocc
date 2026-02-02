@@ -21,7 +21,7 @@ Level1::~Level1() = default;
 /**
  * Initialize
  */
-void Level1::initialize() {
+void Level1::initialize(vecthar::Renderer& renderer) {
     _shader = std::make_unique<vecthar::Shader>();
     _shader->createProgram(_shader->read("./assets/shaders/basic.vert"), _shader->read("./assets/shaders/basic.frag"));
 

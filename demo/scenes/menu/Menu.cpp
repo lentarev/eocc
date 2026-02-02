@@ -20,7 +20,7 @@ Menu::Menu() {}
 
 Menu::~Menu() = default;
 
-void Menu::initialize() {
+void Menu::initialize(vecthar::Renderer& renderer) {
     _uiScale = getEngine()->getWindow().getContentScale();
 
     // Define buttons

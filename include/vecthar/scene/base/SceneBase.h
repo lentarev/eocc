@@ -17,7 +17,7 @@ public:
     virtual ~SceneBase() = default;
 
     /// @brief Initialization
-    virtual void initialize() {}
+    virtual void initialize(Renderer& renderer) {}
 
     /// @brief Returns a pointer to the Engine
     /// @return
