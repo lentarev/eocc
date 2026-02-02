@@ -22,11 +22,16 @@ void Level2::initialize(vecthar::Renderer& renderer) {
     _shader = std::make_unique<vecthar::Shader>();
     _shader->createProgram(_shader->read("./assets/shaders/basic.vert"), _shader->read("./assets/shaders/basic.frag"));
 
+    // Tower
     auto tower = vecthar::ModelLoader::loadFromFile("./assets/models/tower.glb");
     _towerModel = std::make_unique<vecthar::Model>(std::move(tower));
+    _towerTransform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
+    _towerTransform.position = glm::vec3(0.0f, 1.0f, 0.0f);
 
-    _transform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
-    _transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
+    // Ground
+    auto ground = vecthar::ModelLoader::loadFromFile("./assets/models/ground.glb");
+    _groundModel = std::make_unique<vecthar::Model>(std::move(ground));
+    _groundTransform.position = glm::vec3(0.0f, 0.0f, 0.0f);
 
     _uiScale = getEngine()->getWindow().getContentScale();
 
@@ -49,7 +54,7 @@ void Level2::onKey(int key, int scancode, int action, int mods) {
  * Update - logic update
  */
 void Level2::update(float deltaTime, float totalTime) {
-    _transform.rotation.y = glm::radians(45.0f) * totalTime;
+    _towerTransform.rotation.y = glm::radians(45.0f) * totalTime;
 }
 
 /**
@@ -58,8 +63,14 @@ void Level2::update(float deltaTime, float totalTime) {
 void Level2::draw(vecthar::Renderer& renderer) {
     renderer.useShaderProgram(_shader->getProgram());
 
+    // Tower
     for (const auto& mesh : _towerModel->meshes) {
-        renderer.drawMesh(*mesh, mesh->getMaterial(), _transform.getModelMatrix());
+        renderer.drawMesh(*mesh, mesh->getMaterial(), _towerTransform.getModelMatrix());
+    }
+
+    // Ground
+    for (const auto& mesh : _groundModel->meshes) {
+        renderer.drawMesh(*mesh, mesh->getMaterial(), _groundTransform.getModelMatrix());
     }
 }
 

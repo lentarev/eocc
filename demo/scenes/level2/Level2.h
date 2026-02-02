@@ -37,9 +37,16 @@ public:
 private:
     float _uiScale;
 
+    // Tower
     std::unique_ptr<vecthar::Model> _towerModel;
+    vecthar::Transform _towerTransform;
+
+    // Ground
+    std::unique_ptr<vecthar::Model> _groundModel;
+    vecthar::Transform _groundTransform;
+
+    // Shader
     std::unique_ptr<vecthar::Shader> _shader;
-    vecthar::Transform _transform;
 };
 
 #endif  // VECTHAR_LEVEL2_H

@@ -32,6 +32,8 @@ public:
     /// @param totalTime
     virtual void update(float deltaTime, float totalTime) = 0;
 
+    virtual void drawShadow(Renderer& renderer) {};
+
     /// @brief Render
     /// @param renderer
     virtual void draw(Renderer& renderer) = 0;
