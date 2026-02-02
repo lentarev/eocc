@@ -37,13 +37,13 @@ private:
     GLuint _nbo = 0;
     GLuint _tbo = 0;
 
-    Material _material;
-
     std::vector<unsigned int> _indices;
 
     size_t _vertexCount = 0;
 
     bool _hasIndices = false;
+
+    Material _material;
 
     void uploadToGPU(const MeshData& data);
 };
