@@ -60,9 +60,17 @@ void Renderer::drawMesh(const Mesh& mesh, const Material& material, const glm::m
     GLuint viewLoc = glGetUniformLocation(_program, "u_View");
     GLuint projLoc = glGetUniformLocation(_program, "u_Proj");
 
+    // Directional light
+    GLuint lightDirLoc = glGetUniformLocation(_program, "u_LightDir");
+    GLuint lightColor = glGetUniformLocation(_program, "u_LightColor");
+
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &modelMatrix[0][0]);
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &_viewMatrix[0][0]);
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, &_projectionMatrix[0][0]);
+
+    // For directional light
+    glUniform3fv(lightDirLoc, 1, &_directionalLight.direction[0]);
+    glUniform3fv(lightColor, 1, &(_directionalLight.color * _directionalLight.intensity)[0]);
 
     // Material: base color (RGBA)
     GLuint colorLoc = glGetUniformLocation(_program, "u_BaseColor");
@@ -136,6 +144,20 @@ void Renderer::endUIFrame() {
         glEnable(GL_BLEND);
     else
         glDisable(GL_BLEND);
+}
+
+/**
+ * Set directional light
+ */
+void Renderer::setDirectionalLight(const DirectionalLight& light) {
+    _directionalLight = light;
+}
+
+/**
+ * Get directional light
+ */
+const DirectionalLight& Renderer::getDirectionalLight() const {
+    return _directionalLight;
 }
 
 }  // namespace vecthar

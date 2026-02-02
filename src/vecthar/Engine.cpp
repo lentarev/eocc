@@ -189,7 +189,7 @@ void Engine::run() {
             if (_pendingScene) {
                 _currentScene = std::move(_pendingScene);
                 _currentScene->setEngine(this);
-                _currentScene->initialize();
+                _currentScene->initialize(*_renderer);
             }
 
             totalTime += FIXED_DELTA_TIME;
