@@ -34,7 +34,7 @@ void Level2::initialize(vecthar::Renderer& renderer) {
     auto tower = vecthar::ModelLoader::loadFromFile("./assets/models/tower.glb");
     _towerModel = std::make_unique<vecthar::Model>(std::move(tower));
     _towerTransform.scale = glm::vec3(0.5f, 0.5f, 0.5f);
-    _towerTransform.position = glm::vec3(0.0f, 1.0f, 0.0f);
+    _towerTransform.position = glm::vec3(0.0f, 1.5f, 0.0f);
 
     // Ground
     auto ground = vecthar::ModelLoader::loadFromFile("./assets/models/ground.glb");
@@ -71,7 +71,17 @@ void Level2::update(float deltaTime, float totalTime) {
 void Level2::drawShadow(vecthar::Renderer& renderer) {
     renderer.useShaderProgram(_depthShader->getProgram());
 
-    glm::mat4 lightSpaceMatrix = vecthar::calculate_light_space_matrix(renderer.getDirectionalLight(), glm::vec3(0.0f), 10.0f, 1.0f, 30.0f);
+    // glm::mat4 lightSpaceMatrix = vecthar::calculate_light_space_matrix(renderer.getDirectionalLight(), glm::vec3(0.0f), 50.0f, 1.0f, 100.0f);
+
+    glm::mat4 lightProjection = glm::ortho(-30.0f, 30.0f, -30.0f, 30.0f, 1.0f, 100.0f);
+    glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 50.0f, 0.0f),  // высоко над сценой
+                                      glm::vec3(0.0f, 0.0f, 0.0f),   // смотрит точно в центр
+                                      glm::vec3(0.0f, 0.0f, -1.0f)   // up-вектор
+    );
+    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+    renderer.setLightSpaceMatrix(lightSpaceMatrix);
+
     GLuint lightSpaceLoc = glGetUniformLocation(_depthShader->getProgram(), "u_LightSpaceMatrix");
     glUniformMatrix4fv(lightSpaceLoc, 1, GL_FALSE, &lightSpaceMatrix[0][0]);
 

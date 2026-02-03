@@ -11,7 +11,7 @@ uniform sampler2D u_ShadowMap; // ← новое
 out vec4 FragColor;
 
 // // PCF kernel size
-const float bias = 0.005; // ← можно регулировать
+const float bias = 0.05; // ← можно регулировать
 
 float ShadowCalculation(vec4 fragPosLightSpace) {
     // Переводим в [0,1] диапазон
@@ -43,9 +43,15 @@ void main() {
 	FragColor = vec4(result, u_BaseColor.a);
 }
 
-// void main() {
+//void main() {
 // 	vec3 projCoords = FragPosLightSpace.xyz / FragPosLightSpace.w;
 // 	projCoords = projCoords * 0.5 + 0.5;
 // 	float depth = texture(u_ShadowMap, projCoords.xy).r;
 // 	FragColor = vec4(vec3(depth), 1.0);
-// }
+//}
+
+//void main() {
+//	vec2 uv = gl_FragCoord.xy / vec2(2048.0);
+//   float depth = texture(u_ShadowMap, uv).r;
+//    FragColor = vec4(vec3(depth), 1.0);
+//}

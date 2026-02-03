@@ -27,7 +27,7 @@ class ShadowMap;
 
 class Renderer {
 public:
-    Renderer();
+    Renderer(int width, int height);
     ~Renderer();
 
     /// @brief Use shader program
@@ -47,7 +47,7 @@ public:
 
     // 3D
     /// Begin frame
-    void beginFrame(const Camera& camera, float aspectRatio);
+    void beginFrame(const Camera& camera, int width, int height);
 
     /// End frame (optional)
     void endFrame();
@@ -89,6 +89,8 @@ public:
     void setLightSpaceMatrix(const glm::mat4& matrix);
 
 private:
+    int _windowWidth, _windowHeight;
+
     GLuint _program = 0;
 
     glm::mat4 _viewMatrix;
