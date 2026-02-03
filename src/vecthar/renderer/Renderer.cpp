@@ -3,6 +3,7 @@
 //
 
 #include <vecthar/renderer/Renderer.h>
+#include <vecthar/renderer/ShadowMap.h>
 #include <vecthar/assets/mesh/Mesh.h>
 #include <vecthar/camera/Camera.h>
 #include <vecthar/ui/TextRenderer.h>
@@ -18,18 +19,78 @@ namespace vecthar {
 Renderer::Renderer() {
     _textRenderer = std::make_unique<ui::TextRenderer>();
     _textRenderer->loadFontAtlas("./core_assets/fonts/font8x8_atlas_1024x8.png");
+
+    _shadowMap = std::make_unique<ShadowMap>(2048, 2048);
 }
 
+/**
+ * Destructor
+ */
 Renderer::~Renderer() = default;
 
+/**
+ * Use shader program
+ */
 void Renderer::useShaderProgram(GLuint program) {
     _program = program;
+}
+
+/**
+ * Begin shadow pass
+ */
+void Renderer::beginShadowPass() {
+    _shadowMap->bindForWriting();
+    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+    glDepthFunc(GL_LEQUAL);
+
+    // glClearColor(0.09f, 0.09f, 0.09f, 1.0f);
+    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+/**
+ * End shadow pass
+ */
+void Renderer::endShadowPass() {
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0, 0, 800, 600);
+
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    glDepthFunc(GL_LESS);
+
+    // glClearColor(0.09f, 0.09f, 0.09f, 1.0f);
+    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+/**
+ * Draw shadow mesh
+ */
+void Renderer::drawShadowMesh(const Mesh& mesh, const glm::mat4& modelMatrix) {
+    glUseProgram(_program);
+
+    // We pass the model matrix
+    GLint modelLoc = glGetUniformLocation(_program, "u_Model");
+    if (modelLoc != -1) {
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &modelMatrix[0][0]);
+    }
+
+    // Drawing a mesh
+    glBindVertexArray(mesh.getVAO());
+
+    if (mesh.hasIndices()) {
+        glDrawElements(GL_TRIANGLES, mesh.getIndexCount(), GL_UNSIGNED_INT, nullptr);
+    } else {
+        glDrawArrays(GL_TRIANGLES, 0, mesh.getVertexCount());
+    }
+
+    glBindVertexArray(0);
 }
 
 /**
  * Begin frame
  */
 void Renderer::beginFrame(const Camera& camera, float aspectRatio) {
+    // glViewport(0, 0, 800, 600);
+
     _viewMatrix = camera.getViewMatrix();
     _projectionMatrix = camera.getProjectionMatrix(aspectRatio);
     _frameBegun = true;
@@ -71,6 +132,20 @@ void Renderer::drawMesh(const Mesh& mesh, const Material& material, const glm::m
     // For directional light
     glUniform3fv(lightDirLoc, 1, &_directionalLight.direction[0]);
     glUniform3fv(lightColor, 1, &(_directionalLight.color * _directionalLight.intensity)[0]);
+
+    // Shadow mapping
+    GLint lightSpaceLoc = glGetUniformLocation(_program, "u_LightSpaceMatrix");
+    if (lightSpaceLoc != -1) {
+        glUniformMatrix4fv(lightSpaceLoc, 1, GL_FALSE, &_lightSpaceMatrix[0][0]);
+    }
+
+    GLint shadowMapLoc = glGetUniformLocation(_program, "u_ShadowMap");
+    if (shadowMapLoc != -1) {
+        // Используем текстурный юнит 3 (GL_TEXTURE3)
+        glActiveTexture(GL_TEXTURE3);
+        glBindTexture(GL_TEXTURE_2D, _shadowMap->getTexture());
+        glUniform1i(shadowMapLoc, 3);  // 3 = GL_TEXTURE3
+    }
 
     // Material: base color (RGBA)
     GLuint colorLoc = glGetUniformLocation(_program, "u_BaseColor");
@@ -158,6 +233,13 @@ void Renderer::setDirectionalLight(const DirectionalLight& light) {
  */
 const DirectionalLight& Renderer::getDirectionalLight() const {
     return _directionalLight;
+}
+
+/**
+ * Set light space matrix
+ */
+void Renderer::setLightSpaceMatrix(const glm::mat4& matrix) {
+    _lightSpaceMatrix = matrix;
 }
 
 }  // namespace vecthar

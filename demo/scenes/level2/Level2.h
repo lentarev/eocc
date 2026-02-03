@@ -30,6 +30,7 @@ public:
     void initialize(vecthar::Renderer& renderer) override;
 
     void update(float deltaTime, float totalTime) override;
+    void drawShadow(vecthar::Renderer& renderer) override;
     void draw(vecthar::Renderer& renderer) override;
     void drawUI(vecthar::Renderer& renderer, const vecthar::FPSCounter& fps) override;
     void onKey(int key, int scancode, int action, int mods) override;
@@ -45,8 +46,9 @@ private:
     std::unique_ptr<vecthar::Model> _groundModel;
     vecthar::Transform _groundTransform;
 
-    // Shader
+    // Shaders
     std::unique_ptr<vecthar::Shader> _shader;
+    std::unique_ptr<vecthar::Shader> _depthShader;
 };
 
 #endif  // VECTHAR_LEVEL2_H

@@ -11,14 +11,22 @@
 #include <vecthar/base/FPSCounter.h>
 #include <vecthar/system/window/Window.h>
 #include <vecthar/assets/model/ModelLoader.h>
+#include <vecthar/lighting/shadow_utils.h>
 
 #include "scenes/menu/Menu.h"
+
+#include <glad/glad.h>
 
 Level2::Level2() = default;
 
 Level2::~Level2() = default;
 
 void Level2::initialize(vecthar::Renderer& renderer) {
+    // Depth shader
+    _depthShader = std::make_unique<vecthar::Shader>();
+    _depthShader->createProgram(_shader->read("./assets/shaders/depth.vert"), _shader->read("./assets/shaders/depth.frag"));
+
+    // Main hsader
     _shader = std::make_unique<vecthar::Shader>();
     _shader->createProgram(_shader->read("./assets/shaders/basic.vert"), _shader->read("./assets/shaders/basic.frag"));
 
@@ -55,6 +63,27 @@ void Level2::onKey(int key, int scancode, int action, int mods) {
  */
 void Level2::update(float deltaTime, float totalTime) {
     _towerTransform.rotation.y = glm::radians(45.0f) * totalTime;
+}
+
+/**
+ * Draw shadow
+ */
+void Level2::drawShadow(vecthar::Renderer& renderer) {
+    renderer.useShaderProgram(_depthShader->getProgram());
+
+    glm::mat4 lightSpaceMatrix = vecthar::calculate_light_space_matrix(renderer.getDirectionalLight(), glm::vec3(0.0f), 10.0f, 1.0f, 30.0f);
+    GLuint lightSpaceLoc = glGetUniformLocation(_depthShader->getProgram(), "u_LightSpaceMatrix");
+    glUniformMatrix4fv(lightSpaceLoc, 1, GL_FALSE, &lightSpaceMatrix[0][0]);
+
+    // Tower
+    for (const auto& mesh : _towerModel->meshes) {
+        renderer.drawShadowMesh(*mesh, _towerTransform.getModelMatrix());
+    }
+
+    // Ground
+    for (const auto& mesh : _groundModel->meshes) {
+        renderer.drawShadowMesh(*mesh, _groundTransform.getModelMatrix());
+    }
 }
 
 /**

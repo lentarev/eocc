@@ -8,6 +8,7 @@
 #include <vecthar/renderer/Renderer.h>
 #include <vecthar/camera/Camera.h>
 #include <vecthar/base/FPSCounter.h>
+#include <vecthar/lighting/shadow_utils.h>
 
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -196,7 +197,21 @@ void Engine::run() {
             accumulator -= FIXED_DELTA_TIME;
         }
 
-        // --- Render (variable FPS) ---
+        // --- Render (Shadow render) ---
+        if (_currentScene) {
+            const auto& light = _renderer->getDirectionalLight();
+
+            glm::mat4 lightSpaceMatrix = vecthar::calculate_light_space_matrix(light, glm::vec3(0.0f), 10.0f, 1.0f, 30.0f);
+
+            // Передаём матрицу в Renderer
+            _renderer->setLightSpaceMatrix(lightSpaceMatrix);
+
+            _renderer->beginShadowPass();
+            _currentScene->drawShadow(*_renderer);
+            _renderer->endShadowPass();
+        }
+
+        // --- Render (Main render) ---
         if (_currentScene) {
             _renderer->beginFrame(mainCamera, aspect);
             _currentScene->draw(*_renderer);
