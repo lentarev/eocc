@@ -23,19 +23,31 @@ namespace vecthar {
 // Forward declaration of classes
 class Mesh;
 class Camera;
+class ShadowMap;
 
 class Renderer {
 public:
-    Renderer();
+    Renderer(int width, int height);
     ~Renderer();
 
     /// @brief Use shader program
     /// @param program
     void useShaderProgram(GLuint program);
 
+    /// @brief Begin shadow pass
+    void beginShadowPass();
+
+    /// @brief End shadow pass
+    void endShadowPass();
+
+    /// @brief Draw shadow mesh
+    /// @param mesh
+    /// @param modelMatrix
+    void drawShadowMesh(const Mesh& mesh, const glm::mat4& modelMatrix);
+
     // 3D
     /// Begin frame
-    void beginFrame(const Camera& camera, float aspectRatio);
+    void beginFrame(const Camera& camera, int width, int height);
 
     /// End frame (optional)
     void endFrame();
@@ -72,8 +84,14 @@ public:
     /// @return
     const DirectionalLight& getDirectionalLight() const;
 
+    /// @brief Set light space matrix
+    /// @param matrix
+    void setLightSpaceMatrix(const glm::mat4& matrix);
+
 private:
-    GLuint _program = 0;
+    int _windowWidth, _windowHeight;
+
+    GLint _program;
 
     glm::mat4 _viewMatrix;
     glm::mat4 _projectionMatrix;
@@ -87,6 +105,12 @@ private:
 
     // Directional light
     DirectionalLight _directionalLight;
+
+    // Shadow map
+    std::unique_ptr<ShadowMap> _shadowMap;
+
+    // Light space matrix
+    glm::mat4 _lightSpaceMatrix;
 };
 
 }  // namespace vecthar
