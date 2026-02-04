@@ -33,6 +33,7 @@ Renderer::~Renderer() = default;
  */
 void Renderer::useShaderProgram(GLuint program) {
     _program = program;
+    glUseProgram(program);
 }
 
 /**
@@ -40,15 +41,9 @@ void Renderer::useShaderProgram(GLuint program) {
  */
 void Renderer::beginShadowPass() {
     _shadowMap->bindForWriting();
-    // glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-    // glDepthFunc(GL_LEQUAL);
-
-    // glClearColor(0.09f, 0.09f, 0.09f, 1.0f);
-    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // glEnable(GL_DEPTH_TEST);
-    // glDepthMask(GL_TRUE);  // ← ЯВНО ВКЛЮЧИТЬ
-    // glDepthFunc(GL_LEQUAL);
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LEQUAL);
 }
 
 /**
@@ -57,22 +52,13 @@ void Renderer::beginShadowPass() {
 void Renderer::endShadowPass() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glViewport(0, 0, _windowWidth, _windowHeight);
-
-    // glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-    // glDepthFunc(GL_LESS);
-
-    // glClearColor(0.09f, 0.09f, 0.09f, 1.0f);
-    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LESS);
 }
 
 /**
  * Draw shadow mesh
  */
 void Renderer::drawShadowMesh(const Mesh& mesh, const glm::mat4& modelMatrix) {
-    glUseProgram(_program);
-
     // We pass the model matrix
     GLint modelLoc = glGetUniformLocation(_program, "u_Model");
     if (modelLoc != -1) {
@@ -87,6 +73,10 @@ void Renderer::drawShadowMesh(const Mesh& mesh, const glm::mat4& modelMatrix) {
     } else {
         glDrawArrays(GL_TRIANGLES, 0, mesh.getVertexCount());
     }
+
+    GLenum err = glGetError();
+    if (err)
+        std::cout << "OpenGL error: " << err << "\n";
 
     glBindVertexArray(0);
 }
@@ -125,8 +115,6 @@ void Renderer::drawMesh(const Mesh& mesh, const Material& material, const glm::m
     if (!_frameBegun)
         return;
 
-    glUseProgram(_program);
-
     // Matrix
     GLuint modelLoc = glGetUniformLocation(_program, "u_Model");
     GLuint viewLoc = glGetUniformLocation(_program, "u_View");
@@ -149,11 +137,9 @@ void Renderer::drawMesh(const Mesh& mesh, const Material& material, const glm::m
     GLint shadowMapLoc = glGetUniformLocation(_program, "u_ShadowMap");
     GLint lightSpaceLoc = glGetUniformLocation(_program, "u_LightSpaceMatrix");
 
-    // std::cout << "shadowMapLoc: " << shadowMapLoc << std::endl;
-
     if (shadowMapLoc != -1) {
-        _shadowMap->bindForReading(GL_TEXTURE3);
-        glUniform1i(shadowMapLoc, 3);  // 3 = GL_TEXTURE3
+        _shadowMap->bindForReading(GL_TEXTURE1);
+        glUniform1i(shadowMapLoc, 1);  // 1 = GL_TEXTURE1
     }
 
     if (lightSpaceLoc != -1) {

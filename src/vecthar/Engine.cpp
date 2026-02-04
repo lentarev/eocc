@@ -176,10 +176,6 @@ void Engine::run() {
 
         glfwPollEvents();
 
-        // float aspect = static_cast<float>(_window->getWidth()) / _window->getHeight();
-
-        // std::cout << "w: " << _window->getWidth() << " h: " << _window->getHeight() << std::endl;
-
         // --- Logic (fixed timestep) ---
         while (accumulator >= FIXED_DELTA_TIME) {
             if (_currentScene) {
@@ -199,20 +195,6 @@ void Engine::run() {
 
         // --- Render (Shadow render) ---
         if (_currentScene) {
-            // const auto& light = _renderer->getDirectionalLight();
-            // glm::mat4 lightSpaceMatrix = vecthar::calculate_light_space_matrix(light, glm::vec3(0.0f), 50.0f, 1.0f, 100.0f);
-
-            // Временная матрица: свет СТРОГО СВЕРХУ
-            // glm::mat4 lightProjection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 1.0f, 50.0f);
-            // glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 30.0f, 0.0f),  // высоко над сценой
-            //                                   glm::vec3(0.0f, 0.0f, 0.0f),   // смотрит точно в центр
-            //                                   glm::vec3(0.0f, 0.0f, -1.0f)   // up-вектор (смотрит в -Z)
-            // );
-            // glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-
-            // Передаём матрицу в Renderer
-            // _renderer->setLightSpaceMatrix(lightSpaceMatrix);
-
             _renderer->beginShadowPass();
             _currentScene->drawShadow(*_renderer);
             _renderer->endShadowPass();

@@ -91,7 +91,7 @@ public:
 private:
     int _windowWidth, _windowHeight;
 
-    GLuint _program = 0;
+    GLint _program;
 
     glm::mat4 _viewMatrix;
     glm::mat4 _projectionMatrix;

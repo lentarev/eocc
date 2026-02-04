@@ -24,7 +24,7 @@ Level2::~Level2() = default;
 void Level2::initialize(vecthar::Renderer& renderer) {
     // Depth shader
     _depthShader = std::make_unique<vecthar::Shader>();
-    _depthShader->createProgram(_shader->read("./assets/shaders/depth.vert"), _shader->read("./assets/shaders/depth.frag"));
+    _depthShader->createProgram(_depthShader->read("./assets/shaders/depth.vert"), _depthShader->read("./assets/shaders/depth.frag"));
 
     // Main hsader
     _shader = std::make_unique<vecthar::Shader>();
@@ -69,20 +69,14 @@ void Level2::update(float deltaTime, float totalTime) {
  * Draw shadow
  */
 void Level2::drawShadow(vecthar::Renderer& renderer) {
-    renderer.useShaderProgram(_depthShader->getProgram());
+    GLint program = _depthShader->getProgram();
 
-    // glm::mat4 lightSpaceMatrix = vecthar::calculate_light_space_matrix(renderer.getDirectionalLight(), glm::vec3(0.0f), 50.0f, 1.0f, 100.0f);
+    renderer.useShaderProgram(program);
 
-    glm::mat4 lightProjection = glm::ortho(-30.0f, 30.0f, -30.0f, 30.0f, 1.0f, 100.0f);
-    glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 50.0f, 0.0f),  // высоко над сценой
-                                      glm::vec3(0.0f, 0.0f, 0.0f),   // смотрит точно в центр
-                                      glm::vec3(0.0f, 0.0f, -1.0f)   // up-вектор
-    );
-    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-
+    glm::mat4 lightSpaceMatrix = vecthar::calculate_light_space_matrix(renderer.getDirectionalLight(), glm::vec3(0.0f), 50.0f, 1.0f, 100.0f);
     renderer.setLightSpaceMatrix(lightSpaceMatrix);
 
-    GLuint lightSpaceLoc = glGetUniformLocation(_depthShader->getProgram(), "u_LightSpaceMatrix");
+    GLuint lightSpaceLoc = glGetUniformLocation(program, "u_LightSpaceMatrix");
     glUniformMatrix4fv(lightSpaceLoc, 1, GL_FALSE, &lightSpaceMatrix[0][0]);
 
     // Tower
