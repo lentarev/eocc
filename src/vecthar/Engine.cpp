@@ -48,7 +48,7 @@ Engine::Engine() {
     }
 
     // 1. Window subsystem
-    _window = std::make_unique<Window>(800, 600, "OpenGL Test Window");
+    _window = std::make_unique<Window>(1920, 1080, "OpenGL Test Window");
 
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     GLenum err = glGetError();
@@ -57,7 +57,7 @@ Engine::Engine() {
     }
 
     // 2. Renderer subsystem
-    _renderer = std::make_unique<Renderer>(800, 600);
+    _renderer = std::make_unique<Renderer>(1920, 1080);
 
     // Passing a pointer to Engine to the GLFW window
     glfwSetWindowUserPointer(_window->getGLFWWindow(), this);
@@ -161,7 +161,20 @@ void Engine::run() {
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);  // Wireframe for testing
 
     Camera mainCamera;
-    mainCamera.setPosition({0.0f, 4.0f, 8.0f});
+
+    // Perspective
+    // mainCamera.setPosition({0.0f, 4.0f, 8.0f});
+
+    // Получи размеры окна
+    float aspect = (float)_window->getWidth() / (float)_window->getHeight();
+
+    // Orographic
+    mainCamera.setPosition(glm::vec3(0.0f, 17.0f, 14.0f));
+    mainCamera.setTarget(glm::vec3(0.0f, 0.0f, 0.0f));
+    mainCamera.setUp(glm::vec3(0.0f, 1.0f, 0.0f));
+
+    mainCamera.setOrthographic(-7.8f * aspect, 7.8f * aspect, -7.8f, 7.8f, 0.1f, 100.0f);
+    mainCamera.setProjectionType(vecthar::Camera::ProjectionType::Orthographic);
 
     // LOOP
     while (!glfwWindowShouldClose(_window->getGLFWWindow())) {

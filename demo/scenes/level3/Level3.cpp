@@ -41,35 +41,35 @@ void Level3::initialize(vecthar::Renderer& renderer) {
     _shader->createProgram(_shader->read("./assets/shaders/basic.vert"), _shader->read("./assets/shaders/basic.frag"));
 
     // Tower Model
-    auto towerModel = std::make_unique<vecthar::Model>(vecthar::ModelLoader::loadFromFile("./assets/models/tower.glb"));
+    auto towerModel = std::make_unique<vecthar::Model>(vecthar::ModelLoader::loadFromFile("./assets/models/battle_tower/tower.glb"));
 
     // Platform Model
-    auto platformModel = std::make_unique<vecthar::Model>(vecthar::ModelLoader::loadFromFile("./assets/models/platform.glb"));
+    auto platformModel = std::make_unique<vecthar::Model>(vecthar::ModelLoader::loadFromFile("./assets/models/battle_tower/platform.glb"));
 
     // Gun Model
-    auto gunModel = std::make_unique<vecthar::Model>(vecthar::ModelLoader::loadFromFile("./assets/models/gun.glb"));
+    auto gunModel = std::make_unique<vecthar::Model>(vecthar::ModelLoader::loadFromFile("./assets/models/battle_tower/cannon.glb"));
 
     // >>>>>>>>>>>>>>>>>>>>>>>>>>
     // Create root object - Turret
     _turret = std::make_unique<vecthar::GameObject>("Turret");
     _turret->model = std::move(towerModel);
-    _turret->transform.position = glm::vec3(0.0f, 0.8f, 0.0f);
-    _turret->transform.scale = glm::vec3(0.5f);
+    _turret->transform.position = glm::vec3(0.0f, 0.38f, -8.0f);
+    _turret->transform.scale = glm::vec3(0.3f);
 
     // >>>>>>>>>>>>>>>>>>>>>>>>>>
     // We create a platform and add it to the Tower.
     auto platform = std::make_unique<vecthar::GameObject>("Platform");
     platform->model = std::move(platformModel);
-    platform->transform.scale = glm::vec3(0.6f);
-    platform->transform.position = glm::vec3(0.0f, 2.0f, 0.0f);  // local
+    // platform->transform.scale = glm::vec3(0.6f);
+    // platform->transform.position = glm::vec3(0.0f, 2.0f, 0.0f);  // local
     _platformPtr = _turret->addChild(std::move(platform));
 
     // >>>>>>>>>>>>>>>>>>>>>>>>>>
     // Create a gun and add it to the platform
     auto gun = std::make_unique<vecthar::GameObject>("Gun");
     gun->model = std::move(gunModel);
-    gun->transform.position = glm::vec3(0.0f, 1.5f, 0.0f);  // local
-    gun->transform.scale = glm::vec3(1.8f);
+    // gun->transform.position = glm::vec3(0.0f, 1.5f, 0.0f);  // local
+    // gun->transform.scale = glm::vec3(1.8f);
     _platformPtr->addChild(std::move(gun));
 
     // Ground
