@@ -41,8 +41,10 @@ public:
 private:
     float _uiScale;
 
+    // Menu items (Buttons)
     std::unique_ptr<vecthar::ui::Button> _startLevel1Button;
     std::unique_ptr<vecthar::ui::Button> _startLevel2Button;
+    std::unique_ptr<vecthar::ui::Button> _startLevel3Button;
 };
 
 #endif  // VECTHAR_MENU_H

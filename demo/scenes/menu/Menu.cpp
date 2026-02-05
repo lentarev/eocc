@@ -15,6 +15,7 @@
 
 #include "scenes/level1/Level1.h"
 #include "scenes/level2/Level2.h"
+#include "scenes/level3/Level3.h"
 
 Menu::Menu() {}
 
@@ -26,6 +27,7 @@ void Menu::initialize(vecthar::Renderer& renderer) {
     // Define buttons
     _startLevel1Button = std::make_unique<vecthar::ui::Button>();
     _startLevel2Button = std::make_unique<vecthar::ui::Button>();
+    _startLevel3Button = std::make_unique<vecthar::ui::Button>();
 
     onResizeWindow();
 }
@@ -46,16 +48,23 @@ void Menu::onResizeWindow() {
     // Button - Start Level 1
     _startLevel1Button->setLabel("Start Level 1");
     _startLevel1Button->setX(w * _uiScale);
-    _startLevel1Button->setY(h * _uiScale);
+    _startLevel1Button->setY((h - 50) * _uiScale);
     _startLevel1Button->setWidth(200 * _uiScale);
     _startLevel1Button->setHeight(40 * _uiScale);
 
     // Button - Start Level 2
     _startLevel2Button->setLabel("Start Level 2");
     _startLevel2Button->setX(w * _uiScale);
-    _startLevel2Button->setY((h + 50) * _uiScale);
+    _startLevel2Button->setY(h * _uiScale);
     _startLevel2Button->setWidth(200 * _uiScale);
     _startLevel2Button->setHeight(40 * _uiScale);
+
+    // Button - Start Level 3
+    _startLevel3Button->setLabel("Start Level 3");
+    _startLevel3Button->setX(w * _uiScale);
+    _startLevel3Button->setY((h + 50) * _uiScale);
+    _startLevel3Button->setWidth(200 * _uiScale);
+    _startLevel3Button->setHeight(40 * _uiScale);
 }
 
 /**
@@ -89,6 +98,11 @@ void Menu::update(float deltaTime, float totalTime) {
             // Transition to another scene
             engine->setCurrentScene(std::make_unique<Level2>());
         }
+
+        if (_startLevel3Button->contains(mx, my)) {
+            // Transition to another scene
+            engine->setCurrentScene(std::make_unique<Level3>());
+        }
     }
 }
 
@@ -105,6 +119,7 @@ void Menu::drawUI(vecthar::Renderer& renderer, const vecthar::FPSCounter& fps) {
 
     _startLevel1Button->render(renderer, UI_TEXT_SCALE);
     _startLevel2Button->render(renderer, UI_TEXT_SCALE);
+    _startLevel3Button->render(renderer, UI_TEXT_SCALE);
 
     std::string text = "FPS: " + std::to_string(fps.getFPS());
     renderer.drawText(text, 10, 10, UI_TEXT_SCALE, {1.0f, 0.2f, 0.4f});
