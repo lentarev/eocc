@@ -20,6 +20,7 @@ Window::Window(const int width, const int height, const char* title) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_SRGB_CAPABLE, GLFW_TRUE);
     // glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);  // remove the frame
 
     int framebufferWidth;
@@ -42,6 +43,8 @@ Window::Window(const int width, const int height, const char* title) {
         glfwDestroyWindow(_window);  // убираем часть ресурса
         throw std::runtime_error("Failed to initialize GLAD");
     }
+
+    glEnable(GL_FRAMEBUFFER_SRGB);
 
     // Set viewport size
     glViewport(0, 0, framebufferWidth, framebufferHeight);
