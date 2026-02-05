@@ -13,7 +13,21 @@ glm::mat4 Camera::getViewMatrix() const {
 }
 
 glm::mat4 Camera::getProjectionMatrix(float aspectRatio) const {
-    return glm::perspective(_fov, aspectRatio, _near, _far);
+    if (_projectionType == ProjectionType::Perspective) {
+        return glm::perspective(_fov, aspectRatio, _near, _far);
+    } else {
+        // Для ортографии aspectRatio не нужен — границы заданы явно
+        return glm::ortho(_orthoLeft, _orthoRight, _orthoBottom, _orthoTop, _near, _far);
+    }
+}
+
+void Camera::setOrthographic(float left, float right, float bottom, float top, float near, float far) {
+    _orthoLeft = left;
+    _orthoRight = right;
+    _orthoBottom = bottom;
+    _orthoTop = top;
+    _near = near;
+    _far = far;
 }
 
 }  // namespace vecthar
